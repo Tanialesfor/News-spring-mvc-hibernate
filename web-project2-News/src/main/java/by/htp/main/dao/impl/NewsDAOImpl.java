@@ -73,6 +73,12 @@ public class NewsDAOImpl implements NewsDAO {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 			currentSession.save(news);
+			Query theQuery = currentSession
+					.createQuery("update News set statusNews=:statusParam where idNews=:idParam", News.class);
+
+			theQuery.setParameter("statusParam", 5); // published
+			theQuery.setParameter("idParam", news.getIdNews());
+			theQuery.executeUpdate();
 
 		} catch (HibernateException e) {
 			throw new NewsDAOException("Hibernate getting error from method addNews", e);
@@ -100,7 +106,7 @@ public class NewsDAOImpl implements NewsDAO {
 			Session currentSession = sessionFactory.getCurrentSession();
 
 			currentSession.update(news);
-
+			
 		} catch (HibernateException e) {
 			throw new NewsDAOException("Hibernate getting error from method updateNews", e);
 		}

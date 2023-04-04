@@ -13,13 +13,17 @@ import by.htp.main.bean.News;
 import by.htp.main.bean.User;
 import by.htp.main.service.NewsService;
 import by.htp.main.service.ServiceException;
+import by.htp.main.service.UserService;
 
 @Controller
 @RequestMapping("/controller")
-public class NewsController {
+public class UserNewsController {
 	
 	@Autowired
 	private NewsService newsService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	@RequestMapping("/goToBasePage")
@@ -54,11 +58,11 @@ public class NewsController {
 	}
 	
 	@RequestMapping("/goToViewNews")
-	public String goToViewNews(@ModelAttribute("news") News news, Model theModel) {
+	public String goToViewNews(@RequestParam("newsId") int id, Model theModel) {
 		
 		News viewNews;
 		try {
-		viewNews = newsService.findById(news.getIdNews());
+		viewNews = newsService.findById(id);
 	
 		} catch (ServiceException e) {
 		theModel.addAttribute("message", "error message");
@@ -70,11 +74,11 @@ public class NewsController {
 	}
 	
 	@RequestMapping("/goToEditNews")
-	public String goToEditNews(@ModelAttribute("news") News news, Model theModel) {
+	public String goToEditNews(@RequestParam("newsId") int id, Model theModel) {
 		
 		News editNews;
 		try {
-		editNews = newsService.findById(news.getIdNews());
+		editNews = newsService.findById(id);
 	
 		} catch (ServiceException e) {
 		theModel.addAttribute("message", "error message");
@@ -93,7 +97,66 @@ public class NewsController {
 		theModel.addAttribute("presentation", "addNews");
 		return "baseLayout";
 	}
-
+	
+	@RequestMapping("/goToRegistrationPage")
+	public String goToRegistrationPage(Model theModel) {
+		
+		User user= new User ();
+		theModel.addAttribute("user", user);
+		theModel.addAttribute("presentation", "registration");
+		return "baseLayout";
+	}
+	
+	@RequestMapping("/doRegistration")
+	public String doRegistration(@ModelAttribute("user") User user, Model theModel) {
+		try {
+		userService.registration(user);
+	
+		} catch (ServiceException e) {
+		theModel.addAttribute("message", "error message");
+		return "error";
+	}
+		return "newsList";
+	}
+	
+	@RequestMapping("/doSignIn")
+	public String doSignIn(@ModelAttribute("user") User user, Model theModel) {
+		try {
+			
+//			String role = service.signIn(login, password);
+//
+//			if (!role.equals("guest")) {
+//				request.getSession(true).setAttribute(USER, ACTIVE);
+//				request.getSession().setAttribute(ROLE, role);
+//				request.getSession().setAttribute(PERMISSION_ROLE, service.isPermission(login, password));
+//				response.sendRedirect("controller?command=go_to_news_list");
+//			} else {
+//				request.getSession(true).setAttribute(USER, NOT_ACTIVE);
+//				request.setAttribute(AUTHER_ERROR, WRONG_LOGIN_OR_PASSWORD);
+//				request.getRequestDispatcher("/WEB-INF/pages/layouts/baseLayout.jsp").forward(request, response);
+		
+		String role= userService.signIn(user.getLogin(), user.getPassword());
+		
+		if (!role.equals("guest")) {
+			theModel.addAttribute("user", "active");
+			theModel.addAttribute("role", "role");
+		return "newsList";
+		} else {
+			theModel.addAttribute("user", "not active");
+			return "redirect:/controller/goToBasePage";
+		}
+		} catch (ServiceException e) {
+		theModel.addAttribute("message", "error message");
+		return "error";
+	  }
+	}
+	
+	@RequestMapping("/doSignOut")
+	public String doSignOut(Model theModel) {
+				theModel.addAttribute("user", "not active");
+				return "redirect:/controller/goToBasePage";
+		}	
+	
 	@RequestMapping("/goToError")
 	public String goToError(Model theModel) {
 		

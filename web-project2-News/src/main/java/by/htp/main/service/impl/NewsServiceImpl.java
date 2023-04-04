@@ -11,8 +11,6 @@ import by.htp.main.dao.NewsDAOException;
 import by.htp.main.service.NewsService;
 import by.htp.main.service.ServiceException;
 
-
-
 public class NewsServiceImpl implements NewsService {
 
 	@Autowired

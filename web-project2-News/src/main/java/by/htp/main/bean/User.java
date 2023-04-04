@@ -1,7 +1,9 @@
 package by.htp.main.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +36,9 @@ public class User implements Serializable{
 	@Column(name="password")
 	private String password;
 	
+	@Column(name="date_registration")
+	private Date dateRegistration;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "roles_id")
 	private Role role;
@@ -57,6 +62,96 @@ public class User implements Serializable{
 
 	}
 
-	
-	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getDateRegistration() {
+		return dateRegistration;
+	}
+
+	public void setDateRegistration(Date dateRegistration) {
+		this.dateRegistration = dateRegistration;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public StatusUser getStatusUser() {
+		return statusUser;
+	}
+
+	public void setStatusUser(StatusUser statusUser) {
+		this.statusUser = statusUser;
+	}
+
+	public UserDetails getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
+	}
+
+	public List<News> getNews() {
+		return news;
+	}
+
+	public void setNews(List<News> news) {
+		this.news = news;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateRegistration, id, login, news, password, role, statusUser, userDetails);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(dateRegistration, other.dateRegistration) && id == other.id
+				&& Objects.equals(login, other.login) && Objects.equals(news, other.news)
+				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
+				&& Objects.equals(statusUser, other.statusUser) && Objects.equals(userDetails, other.userDetails);
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", login=" + login + ", password=" + password + ", dateRegistration="
+				+ dateRegistration + ", role=" + role + ", statusUser=" + statusUser + ", userDetails=" + userDetails
+				+ ", news=" + news + "]";
+	}
+
+		
 }

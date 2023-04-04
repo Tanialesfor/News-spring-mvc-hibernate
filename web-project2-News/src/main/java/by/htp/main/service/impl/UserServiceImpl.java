@@ -1,27 +1,28 @@
-package by.htp.ex.service.impl;
+package by.htp.main.service.impl;
 
-import by.htp.ex.bean.NewUserInfo;
-import by.htp.ex.dao.DaoException;
-import by.htp.ex.dao.DaoProvider;
-import by.htp.ex.dao.IUserDAO;
-import by.htp.ex.service.ServiceException;
-import by.htp.ex.util.validation.UserValidator;
-import by.htp.ex.util.validation.UserValidator.UserValidationBuilder;
-import by.htp.ex.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserServiceImpl implements IUserService{
+import by.htp.main.bean.User;
+import by.htp.main.dao.DaoException;
+import by.htp.main.dao.UserDAO;
+import by.htp.main.service.ServiceException;
 
-	private final IUserDAO userDAO = DaoProvider.getInstance().getUserDao();
+import by.htp.main.service.UserService;
+
+public class UserServiceImpl implements UserService{
+
+	@Autowired
+	private UserDAO userDAO;
    
 	@Override
 	public String signIn(String login, String password) throws ServiceException {
 				
-		UserValidationBuilder userValidationBuilder = new UserValidator.UserValidationBuilder();
-		UserValidator validator = userValidationBuilder.checkAUthData(login, password).isValid();
-
-		if (!validator.getErrors().isEmpty()) {
-			throw new ServiceException(validator.getErrors().toString());
-		}
+//		UserValidationBuilder userValidationBuilder = new UserValidator.UserValidationBuilder();
+//		UserValidator validator = userValidationBuilder.checkAUthData(login, password).isValid();
+//
+//		if (!validator.getErrors().isEmpty()) {
+//			throw new ServiceException(validator.getErrors().toString());
+//		}
 			try {
 				if(userDAO.logination(login, password)) {
 					return userDAO.getRole(login, password);
@@ -34,21 +35,21 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public boolean registration(NewUserInfo user) throws ServiceException {
-		String name=user.getUserName();
-		String surname=user.getUserSurname();
-		String birthday=user.getBirthday();
-		String email=user.getEmail();
-		String login=user.getLogin();
-		String password=user.getPassword();
-		
-		UserValidationBuilder userValidationBuilder = new UserValidator.UserValidationBuilder();
-		UserValidator validator = userValidationBuilder.checkARegData(name, surname, birthday, login, password, email).isValid();
-
-		if (!validator.getErrors().isEmpty()) {
-			throw new ServiceException(validator.getErrors().toString());
-		}
-		
+	public boolean registration(User user) throws ServiceException {
+//		String name=user.getUserName();
+//		String surname=user.getUserSurname();
+//		String birthday=user.getBirthday();
+//		String email=user.getEmail();
+//		String login=user.getLogin();
+//		String password=user.getPassword();
+//		
+//		UserValidationBuilder userValidationBuilder = new UserValidator.UserValidationBuilder();
+//		UserValidator validator = userValidationBuilder.checkARegData(name, surname, birthday, login, password, email).isValid();
+//
+//		if (!validator.getErrors().isEmpty()) {
+//			throw new ServiceException(validator.getErrors().toString());
+//		}
+//		
 		    try {
 				if (userDAO.registration(user)) {
 					return true;
@@ -60,25 +61,25 @@ public class UserServiceImpl implements IUserService{
 			}
 	}
 
-	@Override
-	public boolean isPermission(String login, String password) throws ServiceException {
-		
-		UserValidationBuilder userValidationBuilder = new UserValidator.UserValidationBuilder();
-		UserValidator validator = userValidationBuilder.checkAUthData(login, password).isValid();
-
-		if (!validator.getErrors().isEmpty()) {
-			throw new ServiceException(validator.getErrors().toString());
-		}
-		
-		else {
-			try {
-				if (userDAO.isPermission(login, password)==true) {
-					return true;
-				}
-			} catch (DaoException e) {
-				throw new ServiceException("error from method isPermission Service", e);
-			}
-			return false;
-		}
-	}
+//	@Override
+//	public boolean isPermission(String login, String password) throws ServiceException {
+//		
+//		UserValidationBuilder userValidationBuilder = new UserValidator.UserValidationBuilder();
+//		UserValidator validator = userValidationBuilder.checkAUthData(login, password).isValid();
+//
+//		if (!validator.getErrors().isEmpty()) {
+//			throw new ServiceException(validator.getErrors().toString());
+//		}
+//		
+//		else {
+//			try {
+//				if (userDAO.isPermission(login, password)==true) {
+//					return true;
+//				}
+//			} catch (DaoException e) {
+//				throw new ServiceException("error from method isPermission Service", e);
+//			}
+//			return false;
+//		}
+//	}
 }
