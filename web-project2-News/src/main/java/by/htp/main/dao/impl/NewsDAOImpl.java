@@ -15,6 +15,7 @@ import by.htp.main.bean.News;
 import by.htp.main.dao.NewsDAO;
 import by.htp.main.dao.NewsDAOException;
 
+@Repository
 public class NewsDAOImpl implements NewsDAO {
 
 	@Autowired
@@ -34,7 +35,7 @@ public class NewsDAOImpl implements NewsDAO {
 
 			Session currentSession = sessionFactory.getCurrentSession();
 
-			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam", News.class);
+			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
 
 			theQuery.setParameter("statusParam", 5); // published
 			theQuery.setMaxResults(count);
@@ -55,7 +56,7 @@ public class NewsDAOImpl implements NewsDAO {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 
-			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam", News.class);
+			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
 
 			theQuery.setParameter("statusParam", 5); // published
 			List<News> newsList = theQuery.getResultList();

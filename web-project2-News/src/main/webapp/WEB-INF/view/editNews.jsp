@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!--  <%@ include file="/WEB-INF/view/localizationGeneral.jsp" %> -->
+<%--@ include file="/WEB-INF/view/localizationGeneral.jsp" --%>
 
 <div class="body-title">
 	<a href="controller?command=go_to_news_list"> ${news_} </a> ${edit_news_b}

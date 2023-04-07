@@ -1,27 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!--  <%@ include file="/WEB-INF/view/localizationGeneral.jsp" %> -->
-
-${guest_info}
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 <div class="body-title">
-	<a href=""> ${news_} </a> ${latest_news}
+	<a href=""> ${news_} News </a> ${latest_news} Latest news
 	<br /> <br /> <br /> <br />
 </div>
 
-<form action="command.do?method=delete" method="post">
-	<c:forEach var="news" items="${requestScope.news}">
+<form action="controller" method="post">
+	
+	<c:forEach var="tempNews" items="${newsList}">
 		<div class="single-news-wrapper">
 			<div class="single-news-header-wrapper">
 				<div class="news-title">
-					<c:out value="${news.title}" />
+					<c:out value="${tempNews.title}" />
 				</div>
 				<div class="news-date">
-					<c:out value="${news.newsDate}" />
+					<c:out value="${tempNews.newsDate}" />
 				</div>
 
 				<div class="news-content">
-					<c:out value="${news.briefNews}" />
+					<c:out value="${tempNews.brief}" />
 				</div>
 			</div>
 		</div>
@@ -29,9 +36,11 @@ ${guest_info}
 	</c:forEach>
 
 	<div class="no-news">
-		<c:if test="${requestScope.news eq null}">
+		<c:if test="${newsList eq null}">
         ${no_news}
 	</c:if>
 	</div>
 
 </form>
+</body>
+</html>

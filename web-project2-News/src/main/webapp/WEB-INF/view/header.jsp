@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!--  <%@ include file="/WEB-INF/view/localizationGeneral.jsp" %> -->
+<%--@ include file="/WEB-INF/view/localizationGeneral.jsp" --%>
 
 <div class="wrapper">
-	<div class="newstitle"> ${news_management}</div>
+	<div class="newstitle"> ${news_management} News management </div>
 
 	<div class="local-link">
 
@@ -16,12 +16,12 @@
 			</a> <br /> <br />
 		</div>
 	
-		<c:if test="${not (sessionScope.user eq 'active')}">
+		<c:if test="${not (user eq 'active')}">
 			<div align="right">
 				<form action="controller" method="post">
 									  <input type="hidden" name="command" value="do_sign_in" /> 
-					${login}    <input type="text" name="login" value="" title="symbols from 1 to 10"/><br /> 
-					${password} <input type="password" name="password" value="" title="symbols from 1 to 10"/><br />
+					${login}  Enter login:  <input type="text" name="login" value="" title="symbols from 1 to 10"/><br /> 
+					${password} Enter password: <input type="password" name="password" value="" title="symbols from 1 to 10"/><br />
 	
 					<c:if test="${not (requestScope.AuthenticationError eq null)}">
 						<font color="red"> 

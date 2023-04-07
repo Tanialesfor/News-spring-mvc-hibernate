@@ -12,7 +12,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.mindrot.jbcrypt.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserDAOImpl implements UserDAO {	
 	
 //	private static final String SELECT_PASSWORD_FROM_LOGIN = "SELECT password FROM users WHERE login = ?";

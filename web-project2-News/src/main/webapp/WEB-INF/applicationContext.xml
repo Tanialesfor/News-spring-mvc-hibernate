@@ -31,8 +31,6 @@
 	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
           
- <!--   <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false" />-->
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
         <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1/news_spring_mvc_hib?useSSL=false" />
         <property name="user" value="root" />
@@ -69,6 +67,7 @@
 
 	<!-- Add support for reading web resources: css, images, js, etc ... -->
 	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
+	
 	<!-- <mvc:resources mapping="css/**" location="node_modules/bootstrap/css/"/>
     <mvc:resources mapping="js/**" location="node_modules/bootstrap/js/"/>
     <mvc:resources mapping="images/**" location="images/"/> -->

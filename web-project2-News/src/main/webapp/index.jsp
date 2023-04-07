@@ -1,1 +1,1 @@
-<% response.sendRedirect("controller/baseLayout"); %> 
+<% response.sendRedirect("controller/goToBasePage"); %> 

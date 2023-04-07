@@ -1,6 +1,7 @@
 package by.htp.main.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import by.htp.main.bean.User;
 import by.htp.main.dao.DaoException;
@@ -9,6 +10,7 @@ import by.htp.main.service.ServiceException;
 
 import by.htp.main.service.UserService;
 
+@Service
 public class UserServiceImpl implements UserService{
 
 	@Autowired

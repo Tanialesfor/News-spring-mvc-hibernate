@@ -3,6 +3,7 @@ package by.htp.main.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.htp.main.bean.News;
@@ -11,6 +12,7 @@ import by.htp.main.dao.NewsDAOException;
 import by.htp.main.service.NewsService;
 import by.htp.main.service.ServiceException;
 
+@Service
 public class NewsServiceImpl implements NewsService {
 
 	@Autowired
