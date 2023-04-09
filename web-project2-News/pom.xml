@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>by.htp.web.spring.mvc.hib</groupId>
-  <artifactId>web-project2-News-spring-mvc-hib</artifactId>
+  <artifactId>web-project2-News</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>web-project2-News-spring-mvc-hib Maven Webapp</name>
+  <name>web-project2-News Maven Webapp</name>
   <url>http://maven.apache.org</url>
      
     <properties>
@@ -104,7 +104,7 @@
   </dependencies>
   
   <build>
-    <finalName>web-project-News-spring-mvc-hib</finalName>
+    <finalName>web-project2-News</finalName>
    
 		<plugins>
 			<plugin>

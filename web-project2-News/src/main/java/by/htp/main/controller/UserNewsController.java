@@ -30,7 +30,7 @@ public class UserNewsController {
 		List<News> news;
 
 		try {
-			news = newsService.latestList(5);
+			news = newsService.list();
 			theModel.addAttribute("news", news);
 
 		} catch (ServiceException e) {
@@ -176,7 +176,7 @@ public class UserNewsController {
 	}
 
 	@RequestMapping("/doDeleteNews")
-	public String doDeleteNews(@RequestParam("newsId") int[] id, Model theModel) {
+	public String doDeleteNews(@RequestParam("idNews") int[] id, Model theModel) {
 		try {
 			newsService.delete(id);
 

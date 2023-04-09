@@ -56,8 +56,9 @@
 						</font> 
 					</c:if>	
 																								
-					<a href="controller?command=go_to_registration_page"> ${registration} </a> 
-					<input type="submit" value="${sign_In}" /><br />
+					<a href="goToRegistrationPage"> ${registration} Registration </a> 
+					<input type="submit" value="sign In" /><br />
+					<!-- <input type="submit" value="${sign_In}" /><br /> -->
 				</form>
 			</div>
 		</c:if>
@@ -75,7 +76,8 @@
 						
 																														
    					<input type="hidden" name="command" value="do_sign_out" /> 
-					<input type="submit" value="${sign_Out}" /><br />
+   					<input type="submit" value="sign Out" /><br />
+					<!-- <input type="submit" value="${sign_Out}" /><br /> -->
 				</form>					
 			</div>
 		</c:if>				

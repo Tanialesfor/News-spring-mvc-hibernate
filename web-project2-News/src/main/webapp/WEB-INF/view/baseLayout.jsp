@@ -15,7 +15,7 @@
  -->
 </title>
 
-<link rel="stylesheet" type="text/css" href="styles/newsStyle.css">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/styles/newsStyle.css"/>">
 
 </head>
 <body>

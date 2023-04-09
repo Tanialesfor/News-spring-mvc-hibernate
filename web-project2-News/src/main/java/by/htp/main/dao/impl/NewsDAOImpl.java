@@ -35,10 +35,11 @@ public class NewsDAOImpl implements NewsDAO {
 
 			Session currentSession = sessionFactory.getCurrentSession();
 
-			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
+			Query<News> theQuery = currentSession.createQuery("from News order by idNews", News.class);
+			//Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
 
-			theQuery.setParameter("statusParam", 5); // published
-			theQuery.setMaxResults(count);
+			//theQuery.setParameter("statusParam", 4); // published
+			//theQuery.setMaxResults(count);
 
 			List<News> newsList = theQuery.getResultList();
 
@@ -56,9 +57,10 @@ public class NewsDAOImpl implements NewsDAO {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 
-			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
+			Query<News> theQuery = currentSession.createQuery("from News order by idNews", News.class);
+			//Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
 
-			theQuery.setParameter("statusParam", 5); // published
+			//theQuery.setParameter("statusParam", 4); // published
 			List<News> newsList = theQuery.getResultList();
 
 			return newsList;

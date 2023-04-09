@@ -13,7 +13,7 @@
 <form:hidden path="idNews" />
 <!--<form action="controller" method="post">-->
 		
-	<c:forEach var="tempNews" items="${newsList}">
+	<c:forEach var="tempNews" items="${news}">
 		<div class="single-news-wrapper">
 			<div class="single-news-header-wrapper">
 				<div class="news-title">
@@ -68,7 +68,7 @@
 	</logic:notEmpty> -->
 
 	<div class="no-news">
-		<c:if test="${newsList eq null}">
+		<c:if test="${news eq null}">
         ${no_news}
 	</c:if>
 	</div>
