@@ -28,28 +28,28 @@ public class NewsDAOImpl implements NewsDAO {
 //	private static final String UPDATE_NEWS = "UPDATE news.news SET title = ?, date_creation = ?, brief = ?, content = ?, users_id = ?, status_news_id = ? WHERE id = ?";
 //	private static final String UPDATE_STATUS_NEWS = "UPDATE news.news SET status_news_id = ? WHERE id = ?";
 
-	@Override
-	public List<News> getLatestsList(int count) throws NewsDAOException {
-
-		try {
-
-			Session currentSession = sessionFactory.getCurrentSession();
-
-			Query<News> theQuery = currentSession.createQuery("from News order by idNews", News.class);
-			//Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
-
-			//theQuery.setParameter("statusParam", 4); // published
-			//theQuery.setMaxResults(count);
-
-			List<News> newsList = theQuery.getResultList();
-
-			return newsList;
-
-		} catch (HibernateException e) {
-			throw new NewsDAOException("Hibernate getting error from method getLatestsList(int count)", e);
-		}
-
-	}
+//	@Override
+//	public List<News> getLatestsList(int count) throws NewsDAOException {
+//
+//		try {
+//
+//			Session currentSession = sessionFactory.getCurrentSession();
+//
+//			Query<News> theQuery = currentSession.createQuery("from News order by idNews", News.class);
+//			//Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
+//
+//			//theQuery.setParameter("statusParam", 4); // published
+//			//theQuery.setMaxResults(count);
+//
+//			List<News> newsList = theQuery.getResultList();
+//
+//			return newsList;
+//
+//		} catch (HibernateException e) {
+//			throw new NewsDAOException("Hibernate getting error from method getLatestsList(int count)", e);
+//		}
+//
+//	}
 
 	@Override
 	public List<News> getList() throws NewsDAOException {
@@ -57,10 +57,10 @@ public class NewsDAOImpl implements NewsDAO {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 
-			Query<News> theQuery = currentSession.createQuery("from News order by idNews", News.class);
-			//Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
+//			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
+			Query<News> theQuery = currentSession.createQuery("from News where statusNews.id=:statusParam order by idNews", News.class);
+			theQuery.setParameter("statusParam", 4); // published
 
-			//theQuery.setParameter("statusParam", 4); // published
 			List<News> newsList = theQuery.getResultList();
 
 			return newsList;
@@ -77,9 +77,9 @@ public class NewsDAOImpl implements NewsDAO {
 			Session currentSession = sessionFactory.getCurrentSession();
 			currentSession.save(news);
 			Query theQuery = currentSession
-					.createQuery("update News set statusNews=:statusParam where idNews=:idParam", News.class);
+					.createQuery("update News set statusNews.id=:statusParam where idNews=:idParam", News.class);
 
-			theQuery.setParameter("statusParam", 5); // published
+			theQuery.setParameter("statusParam", 4); // published
 			theQuery.setParameter("idParam", news.getIdNews());
 			theQuery.executeUpdate();
 
@@ -126,7 +126,7 @@ public class NewsDAOImpl implements NewsDAO {
 				try {
 
 					Query theQuery = currentSession
-							.createQuery("update News set statusNews=:statusParam where idNews=:idParam", News.class);
+							.createQuery("update News set statusNews/id=:statusParam where idNews=:idParam", News.class);
 
 					theQuery.setParameter("statusParam", 2); // deleted
 					theQuery.setParameter("idParam", id);

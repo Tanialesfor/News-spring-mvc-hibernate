@@ -61,15 +61,15 @@ public class NewsServiceImpl implements NewsService {
 
 	}
 
-//	@Override
-	@Transactional
-	public List<News> latestList(int count) throws ServiceException {
-		try {
-			return newsDAO.getLatestsList(5);
-		} catch (NewsDAOException e) {
-			throw new ServiceException(e);
-		}
-	}
+////	@Override
+//	@Transactional
+//	public List<News> latestList(int count) throws ServiceException {
+//		try {
+//			return newsDAO.getLatestsList(5);
+//		} catch (NewsDAOException e) {
+//			throw new ServiceException(e);
+//		}
+//	}
 
 //	@Override
 	@Transactional

@@ -5,7 +5,7 @@
 <div class="menu-wrapper">
 	<div class="menu-title-wrapper">
 		<div class="menu-title">
-		       ${news}
+		       ${news}News
 		</div>
 	</div>
 
@@ -14,13 +14,13 @@
 			<ul style="list-style-image: url(images/img.jpg); text-align: left;">
 				<li style="padding-left: 15px;">
 				
-				<a href="controller?command=go_to_news_list"> ${news_list}</a><br />
+				<a href="goToNewsList"> ${news_list} News List</a><br />
 				</li>
 
-				<c:if test="${sessionScope.role eq 'admin' || sessionScope.role eq 'editor'}">
+				<c:if test="${role eq 'admin' || role eq 'editor'}">
 				   <li style="padding-left: 15px;">
 				
-				    <a href="controller?command=go_to_add_news"> ${add_news} </a>
+				    <a href="goToAddNews"> ${add_news} Add news</a>
                 
                    <br />
 					

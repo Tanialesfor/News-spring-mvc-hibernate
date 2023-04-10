@@ -61,7 +61,7 @@ public class UserDAOImpl implements UserDAO {
     	
     	try {
 			Session currentSession = sessionFactory.getCurrentSession();
-			if (loginExist(login)==true) {
+			if (loginExist(login)==true & checkPassword(password, password)==true) {
 			Query theQuery = currentSession
 					.createQuery("from User where password=:passwordParam,", User.class);
 
@@ -157,14 +157,17 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
+			if (logination(login, password)==true) {
+				
 			User user = currentSession.get(User.class, login);
-			
 			return user.getRole().getRoleName();
+			} 
 			
 		} catch (HibernateException e) {
 			throw new DaoException("Hibernate getting error from method getRole", e);
 		}
 	
+	}
 //		String nameRole = "guest";
 //		Connection con = null;
 //		PreparedStatement ps=null;
@@ -244,7 +247,7 @@ public class UserDAOImpl implements UserDAO {
 			    if (logination (user.getLogin(), user.getPassword())==false) {
 			currentSession.save(user);
 			Query theQuery = currentSession
-					.createQuery("update User set password=:passwordParam, role=:roleParam, dateRegistration=:dateParam, statusUser=:statusUserParam  where id=:idParam", User.class);
+					.createQuery("update User set password=:passwordParam, role.id=:roleParam, dateRegistration=:dateParam, statusUser.id=:statusUserParam  where id=:idParam", User.class);
 
 			theQuery.setParameter("passwordParam", hashPassword(user.getPassword())); 
 			theQuery.setParameter("roleParam", 2); // user

@@ -9,10 +9,12 @@
 
 		<div align="right">
 			<a href="controller?command=do_localization&local=en"> 
-				<c:out value="${en_button}" /> 
+			<c:out value="English" /> 
+				<!--<c:out value="${en_button}" /> -->
 			</a> &nbsp;&nbsp; 
 			<a	href="controller?command=do_localization&local=ru"> 
-				<c:out value="${ru_button}" /> 
+			<c:out value="Russian" /> 
+				<!--<c:out value="${ru_button}" /> -->
 			</a> <br /> <br />
 		</div>
 	
@@ -57,7 +59,7 @@
 					</c:if>	
 																								
 					<a href="goToRegistrationPage"> ${registration} Registration </a> 
-					<input type="submit" value="sign In" /><br />
+					<input type="submit" value="Sign In" /><br />
 					<!-- <input type="submit" value="${sign_In}" /><br /> -->
 				</form>
 			</div>
@@ -76,7 +78,7 @@
 						
 																														
    					<input type="hidden" name="command" value="do_sign_out" /> 
-   					<input type="submit" value="sign Out" /><br />
+   					<input type="submit" value="Sign Out" /><br />
 					<!-- <input type="submit" value="${sign_Out}" /><br /> -->
 				</form>					
 			</div>

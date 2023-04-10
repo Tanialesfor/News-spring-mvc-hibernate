@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -106,7 +107,7 @@ public class UserNewsController {
 		return "baseLayout";
 	}
 
-	@RequestMapping("/doRegistration")
+	@PostMapping("/doRegistration")
 	public String doRegistration(@ModelAttribute("user") User user, Model theModel) {
 		try {
 			userService.registration(user);
@@ -151,7 +152,7 @@ public class UserNewsController {
 		return "error";
 	}
 
-	@RequestMapping("/doAddNews")
+	@PostMapping("/doAddNews")
 	public String doAddNews(@ModelAttribute("news") News news, Model theModel) {
 		try {
 			newsService.add(news);
