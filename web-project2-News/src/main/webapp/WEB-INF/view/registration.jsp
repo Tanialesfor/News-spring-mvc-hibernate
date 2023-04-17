@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--@ include file="/WEB-INF/view/localizationGeneral.jsp" --%> 
 
 <div class="body-title">
@@ -9,13 +10,13 @@
 
 <div class="add-table-margin">
 	<form:form action="doRegistration" modelAttribute="user" method="POST">
-	
+	<form:hidden path="id" />
 	<table class="news_text_format">
 		<tr>
 			<td class="space_around_title_text">${name} Enter name:   </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			     <td><form:input type="text" path="userName" placeholder="symbols from 1 to 10" /></td>
+			<form:input path="userDetails.userName"/>
 			</div></td>
 			
 		</tr>
@@ -24,7 +25,7 @@
 			<td class="space_around_title_text">${surname} Enter surname:   </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-				 <form:input type="text" path="userSurname" placeholder="symbols from 1 to 15" />
+			<form:input path="userDetails.userSurname"/>
 				
 			</div></td>
 			
@@ -33,8 +34,8 @@
 		<tr>
 			<td class="space_around_title_text">${birthday}  Enter birthday:  </td>
 			<td class="space_around_view_text">
-			<div class="word-breaker">
-			     <form:input type="text" path="birthday" placeholder="template YYYY-MM-DD" />
+			<div class="word-breaker"> 
+			<form:input path="userDetails.birthday"  />
 				
 			</div></td>
 			
@@ -44,7 +45,7 @@
 			<td class="space_around_title_text">${email} Enter email:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-				<form:input type="text"  path="email" />
+			<form:input path="userDetails.email" />
 				
 			</div></td>
 				
@@ -53,7 +54,7 @@
 			<td class="space_around_title_text">${login} Enter login:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-				<form:input type="text" path="login" placeholder="symbols from 1 to 10"/>
+			<form:input path="login"/>
 				
 			</div></td>
 			
@@ -62,7 +63,7 @@
 			<td class="space_around_title_text">${password} Enter password:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-				<form:input type="text" path="password" />
+			<form:input path="password"/>
 				
 			</div></td>
 			
@@ -79,6 +80,7 @@
 </form:form> 
 	
 	<div class="second-view-button">
+	<form action="doSignOut" method="post">
 	<input type="submit" value="Cancel" />
 	<!--  <form action="controller" method="post">
 		<input type="hidden" name="command" value="do_sign_out" /> 

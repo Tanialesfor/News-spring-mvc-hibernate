@@ -2,6 +2,9 @@ package by.htp.main.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +22,23 @@ import by.htp.main.service.UserService;
 @Controller
 @RequestMapping("/controller")
 public class UserNewsController {
-
+	
+	private static final String JSP_PASSWORD_PARAM = "password";
+	private static final String USER = "user";
+	private static final String USER_STATUS = "userStatus";
+	private static final String NEWS = "news";
+	private static final String ACTIVE = "active";
+	private static final String NOT_ACTIVE = "not active";
+	private static final String ROLE = "role";
+	private static final String PRESENTATION = "presentation";
+	private static final String VIEW_NEWS = "viewNews";
+	private static final String NEWS_LIST = "newsList";
+	private static final String EDIT_NEWS = "editNews";
+	private static final String ADD_NEWS = "addNews";
+	private static final String REGISTRATION = "registration";
+	private static final String ERROR = "error";
+	private static final String ERROR_MESSAGE = "errorMessage";
+	
 	@Autowired
 	private NewsService newsService;
 
@@ -32,11 +51,10 @@ public class UserNewsController {
 
 		try {
 			news = newsService.list();
-			theModel.addAttribute("news", news);
-
+			theModel.addAttribute(NEWS, news);
 		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
 		}
 		return "baseLayout";
 	}
@@ -49,11 +67,11 @@ public class UserNewsController {
 			newsList = newsService.list();
 
 		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
 		}
-		theModel.addAttribute("news", newsList);
-		theModel.addAttribute("presentation", "newsList");
+		theModel.addAttribute(NEWS, newsList);
+		theModel.addAttribute(PRESENTATION, NEWS_LIST);
 		return "baseLayout";
 	}
 
@@ -65,12 +83,102 @@ public class UserNewsController {
 			viewNews = newsService.findById(id);
 
 		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
 		}
-		theModel.addAttribute("news", viewNews);
-		theModel.addAttribute("presentation", "viewNews");
+		theModel.addAttribute(NEWS, viewNews);
+		theModel.addAttribute(PRESENTATION, VIEW_NEWS);
 		return "baseLayout";
+	}
+
+		
+	@RequestMapping("/goToRegistrationPage")
+	public String goToRegistrationPage(Model theModel) {
+
+		User user = new User();
+		theModel.addAttribute(USER, user);
+		theModel.addAttribute(PRESENTATION, REGISTRATION);
+		return "baseLayout";
+	}
+
+	private static final String AUTHER_MESSAGE_REG = "autherMessageReg";
+//	private static final String REGISTRATION_COMPLETED_SUCCESSFULLY = "local.doRegistration.auther.message.text";
+	private static final String REGISTRATION_COMPLETED_SUCCESSFULLY = "registration completed successfully";
+	private static final String AUTHER_INF_REG = "autherInfReg";
+//	private static final String USER_ALREADY_EXIST = "local.doRegistration.auther.inf.text";
+	private static final String USER_ALREADY_EXIST = "user already exist";
+	
+	@PostMapping("/doRegistration")
+	public String doRegistration(@ModelAttribute("user") User user, HttpServletRequest request, Model theModel) {
+		try {
+			if(userService.registration(user)) {
+				request.getSession().setAttribute(AUTHER_MESSAGE_REG, REGISTRATION_COMPLETED_SUCCESSFULLY);
+				return "redirect:/controller/goToNewsList";
+			} else {
+				request.getSession().setAttribute(AUTHER_INF_REG, USER_ALREADY_EXIST);
+				request.setAttribute(PRESENTATION, REGISTRATION);
+				return "baseLayout";
+			}
+		} catch (ServiceException e) {
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
+		}
+	}
+
+	
+//	private static final String WRONG_LOGIN_OR_PASSWORD = "local.signIn.auther.error.text";
+	private static final String AUTHER_ERROR = "AuthenticationError";
+	private static final String WRONG_LOGIN_OR_PASSWORD = "wrong login or password";
+	
+	@PostMapping("/doSignIn")
+	public String doSignIn(@RequestParam("login") String login, @RequestParam("password") String password, HttpServletRequest request, Model theModel) {
+	
+		try {
+
+			String role = userService.signIn(login, password);
+
+			if (!role.equals("guest")) {
+				theModel.addAttribute(USER_STATUS, ACTIVE);
+				theModel.addAttribute(ROLE, role);
+				return "redirect:/controller/goToNewsList";
+			} else {
+				theModel.addAttribute(USER_STATUS, NOT_ACTIVE);
+				request.getSession().setAttribute(AUTHER_ERROR, WRONG_LOGIN_OR_PASSWORD);
+				return "baseLayout";
+			}
+		} catch (ServiceException e) {
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
+		}
+	}
+
+	@PostMapping("/doSignOut")
+	public String doSignOut(Model theModel) {
+		theModel.addAttribute(USER_STATUS, NOT_ACTIVE);
+		return "redirect:/controller/goToBasePage";
+	}
+
+	
+
+	@RequestMapping("/goToAddNews")
+	public String goToAddNews(Model theModel) {
+
+		News news = new News();
+		theModel.addAttribute(NEWS, news);
+		theModel.addAttribute(PRESENTATION, ADD_NEWS);
+		return "baseLayout";
+	}
+	
+	@PostMapping("/doAddNews")
+	public String doAddNews(@ModelAttribute("news") News news, Model theModel) {
+		try {
+			newsService.add(news);
+
+		} catch (ServiceException e) {
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
+		}
+		return "redirect:/controller/goToNewsList";
 	}
 
 	@RequestMapping("/goToEditNews")
@@ -81,97 +189,22 @@ public class UserNewsController {
 			editNews = newsService.findById(id);
 
 		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
+			theModel.addAttribute(ERROR_MESSAGE,e.getMessage());
+			return "redirect:/controller/goToErrorPage";
 		}
-		theModel.addAttribute("news", editNews);
-		theModel.addAttribute("presentation", "editNews");
+		theModel.addAttribute(NEWS, editNews);
+		theModel.addAttribute(PRESENTATION, EDIT_NEWS);
 		return "baseLayout";
 	}
-
-	@RequestMapping("/goToAddNews")
-	public String goToAddNews(Model theModel) {
-
-		News news = new News();
-		theModel.addAttribute("news", news);
-		theModel.addAttribute("presentation", "addNews");
-		return "baseLayout";
-	}
-
-	@RequestMapping("/goToRegistrationPage")
-	public String goToRegistrationPage(Model theModel) {
-
-		User user = new User();
-		theModel.addAttribute("user", user);
-		theModel.addAttribute("presentation", "registration");
-		return "baseLayout";
-	}
-
-	@PostMapping("/doRegistration")
-	public String doRegistration(@ModelAttribute("user") User user, Model theModel) {
-		try {
-			userService.registration(user);
-
-		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
-		}
-		return "newsList";
-	}
-
-	@RequestMapping("/doSignIn")
-	public String doSignIn(@ModelAttribute("user") User user, Model theModel) {
-		try {
-
-			String role = userService.signIn(user.getLogin(), user.getPassword());
-
-			if (!role.equals("guest")) {
-				theModel.addAttribute("userStatus", "active");
-				theModel.addAttribute("role", "role");
-				return "newsList";
-			} else {
-				theModel.addAttribute("userStatus", "not active");
-				return "redirect:/controller/goToBasePage";
-			}
-		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
-		}
-	}
-
-	@RequestMapping("/doSignOut")
-	public String doSignOut(Model theModel) {
-		theModel.addAttribute("userStatus", "not active");
-		return "redirect:/controller/goToBasePage";
-	}
-
-	@RequestMapping("/goToError")
-	public String goToError(Model theModel) {
-
-		theModel.addAttribute("presentation", "error");
-		return "error";
-	}
-
-	@PostMapping("/doAddNews")
-	public String doAddNews(@ModelAttribute("news") News news, Model theModel) {
-		try {
-			newsService.add(news);
-
-		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
-		}
-		return "redirect:/controller/goToNewsList";
-	}
-
+	
 	@RequestMapping("/doEditNews")
 	public String doEditNews(@ModelAttribute("news") News news, Model theModel) {
 		try {
 			newsService.update(news);
 
 		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
 		}
 		return "redirect:/controller/goToNewsList";
 	}
@@ -182,10 +215,16 @@ public class UserNewsController {
 			newsService.delete(id);
 
 		} catch (ServiceException e) {
-			theModel.addAttribute("message", "error message");
-			return "error";
+			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
+			return "redirect:/controller/goToErrorPage";
 		}
 		return "redirect:/controller/goToNewsList";
 	}
 
+	@RequestMapping("/goToErrorPage")
+	public String goToError(Model theModel) {
+
+		theModel.addAttribute(PRESENTATION, ERROR);
+		return "baseLayout";
+	}
 }

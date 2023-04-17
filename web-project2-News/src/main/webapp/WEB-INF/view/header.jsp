@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--@ include file="/WEB-INF/view/localizationGeneral.jsp" --%>
 
 <div class="wrapper">
@@ -18,16 +19,19 @@
 			</a> <br /> <br />
 		</div>
 	
-		<c:if test="${not (user eq 'active')}">
+		<c:if test="${not (userStatus eq 'active')}">
 			<div align="right">
-				<form action="controller" method="post">
-									  <input type="hidden" name="command" value="do_sign_in" /> 
-					${login}  Enter login:  <input type="text" name="login" value="" title="symbols from 1 to 10"/><br /> 
-					${password} Enter password: <input type="password" name="password" value="" title="symbols from 1 to 10"/><br />
-	
+				<form action="doSignIn"  method="post">
+					${login} Enter login:
+					<input type="text" name="login" value="${login}" title="symbols from 1 to 10"/><br />
+					
+					${password} Enter password:
+					<input type="password" name="password" value="${password}" title="symbols from 1 to 10"/><br />
+				
 					<c:if test="${not (requestScope.AuthenticationError eq null)}">
 						<font color="red"> 
-						   <c:out value="${signIn_auther_error_text}" />
+						<c:out value="AuthenticationError" />
+						  <!--   <c:out value="${signIn_auther_error_text}" />-->
 						   </font> 
 						 </c:if>	  
 				  
@@ -59,6 +63,7 @@
 					</c:if>	
 																								
 					<a href="goToRegistrationPage"> ${registration} Registration </a> 
+					
 					<input type="submit" value="Sign In" /><br />
 					<!-- <input type="submit" value="${sign_In}" /><br /> -->
 				</form>
@@ -66,9 +71,9 @@
 		</c:if>
 		
 							
-		<c:if test="${sessionScope.user eq 'active'}">
+		<c:if test="${userStatus eq 'active'}">
 			<div align="right">
-            	<form action="controller" method="post">
+            	<form action="doSignOut" method="post">
 	            	<c:if test="${not (sessionScope.autherMessage eq null)}">
 						<font color="blue"> 
 						   	<c:out value="${sessionScope.autherMessage}" />
@@ -76,10 +81,9 @@
 						</font> 
 					</c:if>	
 						
-																														
-   					<input type="hidden" name="command" value="do_sign_out" /> 
-   					<input type="submit" value="Sign Out" /><br />
-					<!-- <input type="submit" value="${sign_Out}" /><br /> -->
+						<input type="submit" value="Sign Out" /><br />																								
+   				               <!--<input type="hidden" name="command" value="do_sign_out" />  -->
+   							<!-- <input type="submit" value="${sign_Out}" /><br /> -->
 				</form>					
 			</div>
 		</c:if>				

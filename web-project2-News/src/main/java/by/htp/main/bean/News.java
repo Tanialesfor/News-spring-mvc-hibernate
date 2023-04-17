@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="news")
@@ -25,15 +27,23 @@ public class News implements Serializable{
 	@Column(name="id")
 	private int idNews;
 	
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[\\S\\s]{5,45}$", message = "please, enter Latin characters into the field from 5 to 45")
 	@Column(name="title")
 	private String title;
 	
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[\\S\\s]{5,100}$", message = "please, enter Latin characters into the field")
 	@Column(name="brief")
 	private String brief;
 	
+// @NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[\\S\\s]{10,}$", message = "please, enter Latin characters into the field")
 	@Column(name="content")
 	private String content;
 	
+// @NotNull(message = "please, enter field")
+//	@Pattern(regexp = "((19|20)\\d\\d)\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])", message = "please, enter for template YYYY-MM-DD")
 	@Column(name="date_creation")
 	private Date newsDate;
 	

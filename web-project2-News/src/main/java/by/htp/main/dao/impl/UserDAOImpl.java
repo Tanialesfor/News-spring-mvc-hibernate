@@ -2,6 +2,9 @@ package by.htp.main.dao.impl;
 
 
 import java.util.Date;
+import java.util.List;
+
+import by.htp.main.bean.News;
 import by.htp.main.bean.User;
 import by.htp.main.dao.DaoException;
 import by.htp.main.dao.UserDAO;
@@ -56,21 +59,31 @@ public class UserDAOImpl implements UserDAO {
 		return(passwordVerified);
 	}
 	
+	
+	public User getUser(String login) throws DaoException {
+		try {
+			Session currentSession = sessionFactory.getCurrentSession();
+			User user=currentSession.get(User.class, login);
+		return user;
+		
+		} catch (HibernateException e) {
+			throw new DaoException("Hibernate getting error from method getUser", e);
+		}
+	}
+	
     @Override
  	public boolean logination(String login, String password) throws DaoException {
     	
     	try {
-			Session currentSession = sessionFactory.getCurrentSession();
-			if (loginExist(login)==true & checkPassword(password, password)==true) {
-			Query theQuery = currentSession
-					.createQuery("from User where password=:passwordParam,", User.class);
-
-			theQuery.setParameter("passwordParam", hashPassword(password));
-			} return true;
-				
+				if (checkPassword(password, getUser(login).getPassword())==true) {
+					return true;
+				}
+							
 		} catch (HibernateException e) {
 			throw new DaoException("Hibernate getting error from method logination", e);
 		}
+    	return false;
+    	
     	
 //		Connection con = null;
 //		PreparedStatement ps=null;
@@ -112,12 +125,14 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
-			User user = currentSession.get(User.class, login);
-			return true;
+			if (currentSession.get(User.class, login) != null)
+				return true;
 			
 		} catch (HibernateException e) {
 			throw new DaoException("Hibernate getting error from method loginExist", e);
 		}
+		
+		return false;
 		
 //		Connection con = null;
 //		PreparedStatement ps=null;
@@ -152,21 +167,24 @@ public class UserDAOImpl implements UserDAO {
 //		return false;		
 	}    
     
-     	
+    @Override	
 	public String getRole(String login, String password) throws DaoException {
+		String role="";
 		
 		try {
-			Session currentSession = sessionFactory.getCurrentSession();
-			if (logination(login, password)==true) {
+//		Session currentSession = sessionFactory.getCurrentSession();
+//		Query query = currentSession.createQuery("from User where login=:loginParam and password=:passwordParam", User.class);
+//		query.setParameter("loginParam", "login");
+//		query.setParameter("passwordParam", "password");
+		if (logination(login, password)==true) {
+				role =getUser(login).getRole().getRoleName();
+			}
 				
-			User user = currentSession.get(User.class, login);
-			return user.getRole().getRoleName();
-			} 
-			
 		} catch (HibernateException e) {
 			throw new DaoException("Hibernate getting error from method getRole", e);
 		}
-	
+		
+		return role;
 	}
 //		String nameRole = "guest";
 //		Connection con = null;
@@ -200,7 +218,7 @@ public class UserDAOImpl implements UserDAO {
 //			pool.closeConnection(con, ps, rs);
 //		}
 //	return nameRole;
-}
+//}
 	
 //	public boolean isPermission(String login, String password) throws DaoException {
 //		Connection con = null;
@@ -244,7 +262,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
-			    if (logination (user.getLogin(), user.getPassword())==false) {
+			    if (loginExist (user.getLogin())==false) {
 			currentSession.save(user);
 			Query theQuery = currentSession
 					.createQuery("update User set password=:passwordParam, role.id=:roleParam, dateRegistration=:dateParam, statusUser.id=:statusUserParam  where id=:idParam", User.class);
@@ -262,6 +280,14 @@ public class UserDAOImpl implements UserDAO {
 			throw new DaoException("Hibernate getting error from method registration", e);
 		}
 	}
+
+@Override
+public boolean isPermission(String login, String password) throws DaoException {
+	
+	return false;
+}
+
+	
 		
 //		PreparedStatement ps=null;
 //				

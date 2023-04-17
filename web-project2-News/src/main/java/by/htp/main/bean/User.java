@@ -18,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="users")
@@ -30,9 +32,13 @@ public class User implements Serializable{
 	@Column(name="id")
 	private int id;
 	
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter symbols from 1 to 10")
 	@Column(name="login")
 	private String login;
 	
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter symbols from 1 to 10")
 	@Column(name="password")
 	private String password;
 	

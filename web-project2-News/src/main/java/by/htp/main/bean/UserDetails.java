@@ -24,15 +24,23 @@ public class UserDetails implements Serializable {
 	@Column(name="id")
 	private int id;
 	
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[a-zA-Z-]{1,10}$", message = "please, enter symbols from 1 to 10")
 	@Column(name="name")
 	private String userName;
 	
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[a-zA-Z-]{1,15}$", message = "please, enter symbols from 1 to 15")
 	@Column(name="surname")
 	private String userSurname;
 
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "((19|20)\\d\\d)\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])", message = "please, enter for template YYYY-MM-DD")
 	@Column(name="birthday")
 	private String birthday;
 	
+//	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9]+)*(\\.[a-zA-Z]{2,})$", message = "please, enter for template YYYY-MM-DD")
 	@Column(name="email")
 	private String email;
 	

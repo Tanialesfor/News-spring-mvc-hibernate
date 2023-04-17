@@ -11,13 +11,11 @@
 			
 <form:form action="doDeleteNews" modelAttribute="news" method="POST">
 <form:hidden path="idNews" />
-<!--<form action="controller" method="post">-->
 		
 	<c:forEach var="tempNews" items="${news}">
 		<div class="single-news-wrapper">
 			<div class="single-news-header-wrapper">
 				<div class="news-title">
-					<!--<c:out value="${news.title}" />-->
 					<c:out value="${tempNews.title}" />
 				</div>
 				<div class="news-date">
@@ -33,8 +31,8 @@
 						
 						
 						
-						<c:if test="${sessionScope.role eq 'admin' || sessionScope.role eq 'editor'}">
-						     <!--   <a href="controller?command=go_to_edit_news&id=${news.idNews}"> ${editlink} </a> -->
+						<c:if test="${role eq 'admin' || role eq 'editor'}">
+						    
 						      <c:url var="editLink" value="/controller/goToEditNews">
 						      <c:param name="idNews" value="${tempNews.idNews}" />
 					           </c:url>
@@ -45,7 +43,7 @@
 						      <c:param name="idNews" value="${tempNews.idNews}" />
 					          </c:url>
 					          <a href="${viewLink}"> View </a>
-						<!--  <a href="controller?command=go_to_view_news&id=${news.idNews}"> ${viewlink} </a> -->
+						
    					    
    					    <c:if test="${role eq 'admin' || role eq 'editor'}">
    					         <input type="checkbox" name="id" value="${tempNews.idNews}" />
@@ -57,30 +55,18 @@
 		</div>
 
 	</c:forEach>
-	 
 	 	
-	<!-- 	<logic:notEmpty name="newsForm" property="newsList">
-		<div class="delete-button-position">
-			<html:submit>
-				<bean:message key="locale.newslink.deletebutton" />
-			</html:submit>
-		</div>
-	</logic:notEmpty> -->
-
+	
 	<div class="no-news">
 		<c:if test="${news eq null}">
-        ${no_news}
+        ${no_news} No news
 	</c:if>
 	</div>
 
 	<c:if test="${role eq 'admin' || role eq 'editor'}">
 		<div class="first-view-button">
 		<input type="submit" value="Delete" />
-			<!--  <input type="hidden" name="command" value="do_delete_news" />--> 
-			<!--  <input type="submit" value="${delete}" />-->
-					
-			
+									
 	</div>
 	</c:if>	
 	</form:form>
-<!--</form>-->

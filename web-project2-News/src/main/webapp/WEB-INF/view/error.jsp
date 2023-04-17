@@ -11,25 +11,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<link rel="stylesheet" type="text/css" href="styles/newsStyle.css">
 
 </head>
 <body>
-<h1>${error_page}</h1>
-<h3> ${error_text} </h3>
+<h1>${error_page} Error Page </h1>
+<h3> ${error_text} Sorry. Your request could not be fulfilled.</h3>
 <br /> <br /> 
-<h4> ${error_message} </h4> 
+<h4> ${error_message} Message of error:</h4> 
 
-<c:if test="${not (sessionScope.errorMessage eq null)}">
+<c:if test="${not (errorMessage eq null)}">
 		<font color="red" > 
-			<c:out value="${sessionScope.errorMessage}" />
+			<c:out value="${errorMessage}" />
 		</font> 
 		<br /> <br /> 
 </c:if>
 
-<form action="controller" method="post">
-		<input type="hidden" name="command" value="go_to_base_page" /> 
-		<input type="submit" value="${back}" />
+<form action="goToBasePage" method="post">
+		
+		<input type="submit" value="Back" />
+		<!--  <input type="submit" value="${back}" />-->
 	</form>
 
 </body>
