@@ -2,6 +2,7 @@ package by.htp.main.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import by.htp.main.bean.User;
 import by.htp.main.dao.DaoException;
@@ -16,21 +17,34 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDAO userDAO;
-   
+	
+	@Transactional
 	@Override
-	public String signIn(String login, String password) throws ServiceException {
-				
+	public User signIn(String login, String password) throws ServiceException {
+				User user=null;
 			try {
-				if(userDAO.logination(login, password)) {
-					return userDAO.getRole(login, password);
-				}else {
-					return "guest";
-				}
+				user=userDAO.logination(login, password); 
+					
 			} catch(DaoException e) {
 				throw new ServiceException("error from method signIn Service", e);
 			}
+			return user;
 	}
-
+   
+//	@Override
+//	public String signIn(String login, String password) throws ServiceException {
+//				
+//			try {
+//				if(userDAO.logination(login, password)) {
+//					return userDAO.getRole(login, password);
+//				}else {
+//					return "guest";
+//				}
+//			} catch(DaoException e) {
+//				throw new ServiceException("error from method signIn Service", e);
+//			}
+//	}
+	@Transactional
 	@Override
 	public boolean registration(User user) throws ServiceException {
 

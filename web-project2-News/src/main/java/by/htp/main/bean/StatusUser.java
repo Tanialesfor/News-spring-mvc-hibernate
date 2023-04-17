@@ -44,7 +44,11 @@ public class StatusUser implements Serializable{
 	}
 
 	public StatusUser() {
-
+		
+	}
+	
+    public StatusUser(int id) {
+		this.id=id;
 	}
 	
 	@Override

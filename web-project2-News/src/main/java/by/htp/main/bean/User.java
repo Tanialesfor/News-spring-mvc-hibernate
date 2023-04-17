@@ -43,7 +43,7 @@ public class User implements Serializable{
 	private String password;
 	
 	@Column(name="date_registration")
-	private Date dateRegistration;
+	private String dateRegistration;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "roles_id")
@@ -92,11 +92,11 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public Date getDateRegistration() {
+	public String getDateRegistration() {
 		return dateRegistration;
 	}
 
-	public void setDateRegistration(Date dateRegistration) {
+	public void setDateRegistration(String dateRegistration) {
 		this.dateRegistration = dateRegistration;
 	}
 

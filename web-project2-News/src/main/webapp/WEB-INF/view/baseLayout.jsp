@@ -11,10 +11,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>locale.linkname.headertitle 
-
-</title>
-
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/styles/newsStyle.css"/>">
 
 </head>
@@ -33,6 +29,7 @@
 					<c:import url="/WEB-INF/view/menu.jsp" />
 				</c:if>
 			</div>
+						
 			<div class="content">               
                  <c:if test="${userStatus eq 'active'}">
 					<c:import url="/WEB-INF/view/body.jsp" />

@@ -80,7 +80,7 @@
 </form:form> 
 	
 	<div class="second-view-button">
-	<form action="doSignOut" method="post">
+	<form action="doSignOut" method="get">
 	<input type="submit" value="Cancel" />
 	<!--  <form action="controller" method="post">
 		<input type="hidden" name="command" value="do_sign_out" /> 

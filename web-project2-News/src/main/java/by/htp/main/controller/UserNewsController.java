@@ -131,19 +131,19 @@ public class UserNewsController {
 	private static final String WRONG_LOGIN_OR_PASSWORD = "wrong login or password";
 	
 	@PostMapping("/doSignIn")
-	public String doSignIn(@RequestParam("login") String login, @RequestParam("password") String password, HttpServletRequest request, Model theModel) {
-	
+	public String doSignIn(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session, Model theModel) {
+	User user;
 		try {
+             user=userService.signIn(login, password);
+//			String role = userService.signIn(login, password);
 
-			String role = userService.signIn(login, password);
-
-			if (!role.equals("guest")) {
+			if (user!=null && !user.getRole().getRoleName().equals("guest")) {
 				theModel.addAttribute(USER_STATUS, ACTIVE);
-				theModel.addAttribute(ROLE, role);
+				theModel.addAttribute(ROLE, user.getRole().getRoleName());
 				return "redirect:/controller/goToNewsList";
 			} else {
 				theModel.addAttribute(USER_STATUS, NOT_ACTIVE);
-				request.getSession().setAttribute(AUTHER_ERROR, WRONG_LOGIN_OR_PASSWORD);
+				session.setAttribute(AUTHER_ERROR, WRONG_LOGIN_OR_PASSWORD);
 				return "baseLayout";
 			}
 		} catch (ServiceException e) {

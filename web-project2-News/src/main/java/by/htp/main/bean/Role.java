@@ -46,9 +46,12 @@ public class Role implements Serializable{
 	private List<Permission> permission;
 
 	public Role() {
-
 	}
-
+	
+	public Role(int id) {
+    this.id=id;
+	}
+	
 	public int getId() {
 		return id;
 	}

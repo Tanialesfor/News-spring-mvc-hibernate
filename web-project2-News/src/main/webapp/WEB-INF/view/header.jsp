@@ -23,14 +23,14 @@
 			<div align="right">
 				<form action="doSignIn"  method="post">
 					${login} Enter login:
-					<input type="text" name="login" value="${login}" title="symbols from 1 to 10"/><br />
+					<input type="text" name="login" value="" title="symbols from 1 to 10"/><br />
 					
 					${password} Enter password:
-					<input type="password" name="password" value="${password}" title="symbols from 1 to 10"/><br />
+					<input type="password" name="password" value="" title="symbols from 1 to 10"/><br />
 				
 					<c:if test="${not (requestScope.AuthenticationError eq null)}">
 						<font color="red"> 
-						<c:out value="AuthenticationError" />
+						<c:out value="${requestScope.AuthenticationError}" />
 						  <!--   <c:out value="${signIn_auther_error_text}" />-->
 						   </font> 
 						 </c:if>	  
