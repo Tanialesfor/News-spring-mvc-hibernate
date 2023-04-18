@@ -30,7 +30,7 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private int id=0;
 	
 //	@NotNull(message = "please, enter field")
 //	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter symbols from 1 to 10")
@@ -65,7 +65,7 @@ public class User implements Serializable{
 	private List<News> news;
 	
 	public User() {
-
+       super();
 	}
 
 	public int getId() {

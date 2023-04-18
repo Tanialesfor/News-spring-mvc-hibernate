@@ -51,7 +51,7 @@ public class NewsServiceImpl implements NewsService {
 
 //	@Override
 	@Transactional
-	public void delete(int[] idNews) throws ServiceException {
+	public void delete(List<String> idNews) throws ServiceException {
 		try {
 			newsDAO.deleteNewses(idNews);
 

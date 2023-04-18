@@ -30,6 +30,7 @@ public class UserNewsController {
 	private static final String ACTIVE = "active";
 	private static final String NOT_ACTIVE = "not active";
 	private static final String ROLE = "role";
+	private static final String GUEST = "guest";
 	private static final String PRESENTATION = "presentation";
 	private static final String VIEW_NEWS = "viewNews";
 	private static final String NEWS_LIST = "newsList";
@@ -54,7 +55,7 @@ public class UserNewsController {
 			theModel.addAttribute(NEWS, news);
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
 		return "baseLayout";
 	}
@@ -65,18 +66,18 @@ public class UserNewsController {
 
 		try {
 			newsList = newsService.list();
+			theModel.addAttribute(NEWS, newsList);
+			theModel.addAttribute(PRESENTATION, NEWS_LIST);			
 
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
-		theModel.addAttribute(NEWS, newsList);
-		theModel.addAttribute(PRESENTATION, NEWS_LIST);
 		return "baseLayout";
 	}
 
 	@RequestMapping("/goToViewNews")
-	public String goToViewNews(@RequestParam("newsId") int id, Model theModel) {
+	public String goToViewNews(@RequestParam("id") int id, Model theModel) {
 
 		News viewNews;
 		try {
@@ -84,7 +85,7 @@ public class UserNewsController {
 
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
 		theModel.addAttribute(NEWS, viewNews);
 		theModel.addAttribute(PRESENTATION, VIEW_NEWS);
@@ -113,15 +114,15 @@ public class UserNewsController {
 		try {
 			if(userService.registration(user)) {
 				request.getSession().setAttribute(AUTHER_MESSAGE_REG, REGISTRATION_COMPLETED_SUCCESSFULLY);
-				return "redirect:/controller/goToNewsList";
+				return "redirect:goToNewsList";
 			} else {
 				request.getSession().setAttribute(AUTHER_INF_REG, USER_ALREADY_EXIST);
-				request.setAttribute(PRESENTATION, REGISTRATION);
+				theModel.addAttribute(PRESENTATION, REGISTRATION);
 				return "baseLayout";
 			}
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
 	}
 
@@ -134,13 +135,15 @@ public class UserNewsController {
 	public String doSignIn(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session, Model theModel) {
 	User user;
 		try {
-             user=userService.signIn(login, password);
+            user=userService.signIn(login, password);
 //			String role = userService.signIn(login, password);
 
 			if (user!=null && !user.getRole().getRoleName().equals("guest")) {
 				theModel.addAttribute(USER_STATUS, ACTIVE);
 				theModel.addAttribute(ROLE, user.getRole().getRoleName());
-				return "redirect:/controller/goToNewsList";
+				session.setAttribute(USER_STATUS, ACTIVE);
+				session.setAttribute(ROLE, user.getRole().getRoleName());
+				return "redirect:goToNewsList";
 			} else {
 				theModel.addAttribute(USER_STATUS, NOT_ACTIVE);
 				session.setAttribute(AUTHER_ERROR, WRONG_LOGIN_OR_PASSWORD);
@@ -148,14 +151,15 @@ public class UserNewsController {
 			}
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
 	}
 
 	@PostMapping("/doSignOut")
 	public String doSignOut(Model theModel) {
 		theModel.addAttribute(USER_STATUS, NOT_ACTIVE);
-		return "redirect:/controller/goToBasePage";
+		theModel.addAttribute(ROLE, GUEST);
+		return "redirect:goToBasePage";
 	}
 
 	
@@ -176,13 +180,13 @@ public class UserNewsController {
 
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
-		return "redirect:/controller/goToNewsList";
+		return "redirect:goToNewsList";
 	}
 
 	@RequestMapping("/goToEditNews")
-	public String goToEditNews(@RequestParam("newsId") int id, Model theModel) {
+	public String goToEditNews(@RequestParam("id") int id, Model theModel) {
 
 		News editNews;
 		try {
@@ -190,7 +194,7 @@ public class UserNewsController {
 
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE,e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
 		theModel.addAttribute(NEWS, editNews);
 		theModel.addAttribute(PRESENTATION, EDIT_NEWS);
@@ -204,21 +208,21 @@ public class UserNewsController {
 
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
-		return "redirect:/controller/goToNewsList";
+		return "redirect:goToNewsList";
 	}
 
 	@RequestMapping("/doDeleteNews")
-	public String doDeleteNews(@RequestParam("idNews") int[] id, Model theModel) {
+	public String doDeleteNews(@RequestParam("id") List<String> id, Model theModel) {
 		try {
 			newsService.delete(id);
 
 		} catch (ServiceException e) {
 			theModel.addAttribute(ERROR_MESSAGE, e.getMessage());
-			return "redirect:/controller/goToErrorPage";
+			return "redirect:goToErrorPage";
 		}
-		return "redirect:/controller/goToNewsList";
+		return "redirect:goToNewsList";
 	}
 
 	@RequestMapping("/goToErrorPage")

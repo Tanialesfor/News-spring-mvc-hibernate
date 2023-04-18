@@ -10,7 +10,7 @@
 
 			
 <form:form action="doDeleteNews" modelAttribute="news" method="POST">
-<form:hidden path="idNews" />
+
 		
 	<c:forEach var="tempNews" items="${news}">
 		<div class="single-news-wrapper">
@@ -34,20 +34,20 @@
 						<c:if test="${role eq 'admin' || role eq 'editor'}">
 						    
 						      <c:url var="editLink" value="/controller/goToEditNews">
-						      <c:param name="idNews" value="${tempNews.idNews}" />
+						      <c:param name="id" value="${tempNews.idNews}" />
 					           </c:url>
 						      <a href="${editLink}"> Edit </a>
 						</c:if>
 						
 						<c:url var="viewLink" value="/controller/goToViewNews">
-						      <c:param name="idNews" value="${tempNews.idNews}" />
+						      <c:param name="id" value="${tempNews.idNews}" />
 					          </c:url>
 					          <a href="${viewLink}"> View </a>
 						
    					    
    					    <c:if test="${role eq 'admin' || role eq 'editor'}">
-   					         <input type="checkbox" name="id" value="${tempNews.idNews}" />
-   					    </c:if>
+   					         <input type="checkbox" name="idNews" value="${tempNews.idNews}" />
+   					    </c:if> 
 					</div>
 				</div>
 

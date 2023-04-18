@@ -23,7 +23,7 @@
 		<div class="base-layout-wrapper">
 			<div class="menu">
 				<c:if test="${not (userStatus eq 'active')}">
-				     ${welcom}
+				     ${welcom} Welcom!
 				</c:if>				
 				<c:if test="${userStatus eq 'active'}">
 					<c:import url="/WEB-INF/view/menu.jsp" />

@@ -25,27 +25,27 @@ public class News implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int idNews;
+	private Integer idNews=0;
 	
 //	@NotNull(message = "please, enter field")
 //	@Pattern(regexp = "^[\\S\\s]{5,45}$", message = "please, enter Latin characters into the field from 5 to 45")
 	@Column(name="title")
-	private String title;
+	private String title="";
 	
 //	@NotNull(message = "please, enter field")
 //	@Pattern(regexp = "^[\\S\\s]{5,100}$", message = "please, enter Latin characters into the field")
 	@Column(name="brief")
-	private String brief;
+	private String brief="";
 	
 // @NotNull(message = "please, enter field")
 //	@Pattern(regexp = "^[\\S\\s]{10,}$", message = "please, enter Latin characters into the field")
 	@Column(name="content")
-	private String content;
+	private String content="";
 	
 // @NotNull(message = "please, enter field")
 //	@Pattern(regexp = "((19|20)\\d\\d)\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])", message = "please, enter for template YYYY-MM-DD")
 	@Column(name="date_creation")
-	private Date newsDate;
+	private String newsDate="";
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "users_id")
@@ -56,13 +56,14 @@ public class News implements Serializable{
 	private StatusNews statusNews;
 	
 	public News () {
+		super();
 	}
 
-	public int getIdNews() {
+	public Integer getIdNews() {
 		return idNews;
 	}
 
-	public void setIdNews(int idNews) {
+	public void setIdNews(Integer idNews) {
 		this.idNews = idNews;
 	}
 
@@ -90,11 +91,11 @@ public class News implements Serializable{
 		this.content = content;
 	}
 
-	public Date getNewsDate() {
+	public String getNewsDate() {
 		return newsDate;
 	}
 
-	public void setNewsDate(Date newsDate) {
+	public void setNewsDate(String newsDate) {
 		this.newsDate = newsDate;
 	}
 

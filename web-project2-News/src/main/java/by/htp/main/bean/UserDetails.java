@@ -48,7 +48,7 @@ public class UserDetails implements Serializable {
 	private User user;
 	
 	public UserDetails() {
-
+       super();
 	}
 
 	public String getUserName() {

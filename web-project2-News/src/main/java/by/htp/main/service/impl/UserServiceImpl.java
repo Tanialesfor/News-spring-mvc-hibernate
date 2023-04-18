@@ -21,14 +21,14 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	@Override
 	public User signIn(String login, String password) throws ServiceException {
-				User user=null;
-			try {
-				user=userDAO.logination(login, password); 
-					
-			} catch(DaoException e) {
-				throw new ServiceException("error from method signIn Service", e);
-			}
-			return user;
+		User user=null;
+		try {
+			user=userDAO.logination(login, password); 
+				
+		} catch(DaoException e) {
+			throw new ServiceException("error from method signIn Service", e);
+		}
+		return user;
 	}
    
 //	@Override

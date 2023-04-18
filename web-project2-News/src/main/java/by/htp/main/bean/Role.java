@@ -46,10 +46,12 @@ public class Role implements Serializable{
 	private List<Permission> permission;
 
 	public Role() {
+		super();
 	}
 	
 	public Role(int id) {
-    this.id=id;
+        super();
+		this.id=id;
 	}
 	
 	public int getId() {

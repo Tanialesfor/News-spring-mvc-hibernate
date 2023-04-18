@@ -67,16 +67,17 @@ public class UserDAOImpl implements UserDAO {
 	public User logination(String login, String password) throws DaoException {
 
 		User user;
-          try{
-		Session currentSession = sessionFactory.getCurrentSession();
-
-		Query<User> theQuery = currentSession.createQuery("from User where login = :loginParam", User.class);
-		theQuery.setParameter("loginParam", login);
-
-		user = theQuery.uniqueResult();
-		if (user != null && checkPassword(password, getUser(login).getPassword())==true) {
-			return user;
-		}	} catch (HibernateException e) {
+         try{
+			Session currentSession = sessionFactory.getCurrentSession();
+	
+			Query<User> theQuery = currentSession.createQuery("from User where login = :loginParam", User.class);
+			theQuery.setParameter("loginParam", login);
+	
+			user = theQuery.uniqueResult();
+			if (user != null && checkPassword(password, user.getPassword())==true) {
+				return user;
+			}	
+		} catch (HibernateException e) {
 			throw new DaoException("Hibernate getting error from method logination", e);
 		}
 		return null;
@@ -130,24 +131,23 @@ public class UserDAOImpl implements UserDAO {
 		theQuery.setParameter("loginParam", user.getLogin());
 		         
 		try {
-		User theUser = theQuery.uniqueResult();
+			User theUser = theQuery.uniqueResult();
 
-		if (theUser != null) {
-			return false;
-		} else {
-			
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			LocalDateTime date = LocalDateTime.now();
-			String dateTime = formatter.format(date);
-			String hashpassword = hashPassword(user.getPassword());
-			user.setPassword(hashpassword);
-			user.setDateRegistration(dateTime);
-			user.setRole(new Role(2));
-			user.setStatusUser(new StatusUser(1));
-
-			currentSession.save(user);
-			return true;
-		}
+			if (theUser != null) {
+				return false;
+			} else {				
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				LocalDateTime date = LocalDateTime.now();
+				String dateTime = formatter.format(date);
+				String hashpassword = hashPassword(user.getPassword());
+				user.setPassword(hashpassword);
+				user.setDateRegistration(dateTime);
+				user.setRole(new Role(2));
+				user.setStatusUser(new StatusUser(1));
+	
+				currentSession.save(user);
+				return true;
+			}
 		} catch (HibernateException e) {
 			throw new DaoException("Hibernate getting error from method registration",e);
 		}

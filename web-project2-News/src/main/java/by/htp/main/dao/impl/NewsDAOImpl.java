@@ -21,44 +21,34 @@ public class NewsDAOImpl implements NewsDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-//	private static final String SELECT_LATEST_NEWS = "SELECT * FROM news.news WHERE status_news_id = ? OR status_news_id = ? ORDER BY news.news.date_creation DESC LIMIT ?";
-//	private static final String SELECT_ALL_NEWS = "SELECT * FROM news.news WHERE status_news_id = ? OR status_news_id = ? ORDER BY news.news.date_creation DESC";
-//	private static final String INSERT_NEWS = "INSERT INTO news.news(title, date_creation, brief, content, users_id, status_news_id) VALUES(?, ?, ?, ?, ?, ?)";
-//	private static final String SELECT_NEWS_FOR_ID = "SELECT * FROM news.news WHERE id = ?";
-//	private static final String UPDATE_NEWS = "UPDATE news.news SET title = ?, date_creation = ?, brief = ?, content = ?, users_id = ?, status_news_id = ? WHERE id = ?";
-//	private static final String UPDATE_STATUS_NEWS = "UPDATE news.news SET status_news_id = ? WHERE id = ?";
+	@Override
+	public List<News> getLatestsList(int count) throws NewsDAOException {
 
-//	@Override
-//	public List<News> getLatestsList(int count) throws NewsDAOException {
-//
-//		try {
-//
-//			Session currentSession = sessionFactory.getCurrentSession();
-//
-//			Query<News> theQuery = currentSession.createQuery("from News order by idNews", News.class);
-//			//Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
-//
-//			//theQuery.setParameter("statusParam", 4); // published
-//			//theQuery.setMaxResults(count);
-//
-//			List<News> newsList = theQuery.getResultList();
-//
-//			return newsList;
-//
-//		} catch (HibernateException e) {
-//			throw new NewsDAOException("Hibernate getting error from method getLatestsList(int count)", e);
-//		}
-//
-//	}
+		try {
+
+			Session currentSession = sessionFactory.getCurrentSession();
+
+			Query<News> theQuery = currentSession.createQuery("from News where statusNews.id=:statusParam order by date(date_creation) desc", News.class);
+
+			theQuery.setParameter("statusParam", 4); // published
+			theQuery.setMaxResults(count);
+
+			List<News> newsList = theQuery.getResultList();
+
+			return newsList;
+
+		} catch (HibernateException e) {
+			throw new NewsDAOException("Hibernate getting error from method getLatestsList(int count)", e);
+		}
+
+	}
 
 	@Override
 	public List<News> getList() throws NewsDAOException {
 
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
-
-//			Query<News> theQuery = currentSession.createQuery("from News where statusNews=:statusParam order by idNews", News.class);
-			Query<News> theQuery = currentSession.createQuery("from News where statusNews.id=:statusParam order by idNews", News.class);
+			Query<News> theQuery = currentSession.createQuery("from News where statusNews.id=:statusParam order by date(date_creation) desc", News.class);
 			theQuery.setParameter("statusParam", 4); // published
 
 			List<News> newsList = theQuery.getResultList();
@@ -117,31 +107,25 @@ public class NewsDAOImpl implements NewsDAO {
 	}
 
 	@Override
-	public void deleteNewses(int[] idNewses) throws NewsDAOException {
-
-		try {
+	public void deleteNewses(List <String> idNewses) throws NewsDAOException {	
+		
 			Session currentSession = sessionFactory.getCurrentSession();
 
-			for (int id : idNewses) {
+			for (String idNews : idNewses) {
+				Integer id;
 				try {
-
-					Query theQuery = currentSession
-							.createQuery("update News set statusNews/id=:statusParam where idNews=:idParam", News.class);
-
-					theQuery.setParameter("statusParam", 2); // deleted
-					theQuery.setParameter("idParam", id);
-					theQuery.executeUpdate();
-
-//					News news = currentSession.get(News.class, id);
-//					currentSession.delete(news);	
-
+					id = Integer.parseInt(idNews);
+					
 				} catch (NumberFormatException e) {
 					throw new NewsDAOException("Error with parsing ", e);
 				}
+				Query theQuery = currentSession
+						.createQuery("update News set statusNews.id=:statusParam where idNews=:idParam", News.class);
+
+				theQuery.setParameter("statusParam", 2); // deleted
+				theQuery.setParameter("idParam", id);
+				theQuery.executeUpdate();
 			}
-		} catch (HibernateException e) {
-			throw new NewsDAOException("Hibernate getting error from method deleteNewses", e);
-		}
 	}
 
 }
