@@ -49,9 +49,10 @@ public class Role implements Serializable{
 		super();
 	}
 	
-	public Role(int id) {
+	public Role(int id, String roleName) {
         super();
 		this.id=id;
+		this.roleName=roleName;
 	}
 	
 	public int getId() {

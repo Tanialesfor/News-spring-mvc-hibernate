@@ -24,15 +24,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDAOImpl implements UserDAO {	
 	
-//	private static final String SELECT_PASSWORD_FROM_LOGIN = "SELECT password FROM users WHERE login = ?";
-//	private static final String SELECT_ID_FROM_LOGIN = "SELECT id FROM users WHERE login = ?";
-//	private static final String SELECT_ROLE_NAME_FROM_LOGIN = "SELECT role_name FROM news.roles INNER JOIN news.users ON news.roles.id=news.users.roles_id WHERE login = ?";
-//	private static final String SELECT_PERMISSION_NAME_FROM_PREMID_LOGIN = "SELECT permission_name FROM news.permissions INNER JOIN news.role_has_permissions ON news.permissions.id=news.role_has_permissions.permissions_id \r\n"
-//	+ "INNER JOIN news.roles ON news.roles.id=news.role_has_permissions.roles_id \r\n"
-//	+ "INNER JOIN news.users ON news.roles.id=news.users.roles_id WHERE news.permissions.id=? AND news.users.login=?";
-//	private static final String INSERT_USERS = "INSERT INTO users(login, password, date_registration, roles_id, status_id) VALUES(?, ?, ?, ?, ?)";
-//	private static final String INSERT_USERS_DETAILS = "INSERT INTO user_details(users_id, name, surname, birthday, email) VALUES(?, ?, ?, ?, ?)";
-	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -94,19 +85,6 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 	
-//    @Override
-// 	public boolean logination(String login, String password) throws DaoException {
-//    	
-//    	try {
-//				if (checkPassword(password, getUser(login).getPassword())==true) {
-//					return true;
-//				}
-//							
-//		} catch (HibernateException e) {
-//			throw new DaoException("Hibernate getting error from method logination", e);
-//		}
-//    	return false;
-//        }
      
 	@Override
 	public boolean loginExist(String login) throws DaoException {
@@ -142,8 +120,8 @@ public class UserDAOImpl implements UserDAO {
 				String hashpassword = hashPassword(user.getPassword());
 				user.setPassword(hashpassword);
 				user.setDateRegistration(dateTime);
-				user.setRole(new Role(2));
-				user.setStatusUser(new StatusUser(1));
+				user.setRole(new Role(2, "user")); 
+				user.setStatusUser(new StatusUser(1, "active"));
 	
 				currentSession.save(user);
 				return true;
@@ -153,29 +131,6 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 	
-//	@Override
-//	public boolean registration(User user) throws DaoException {
-//		
-//		try {
-//			Session currentSession = sessionFactory.getCurrentSession();
-//			    if (loginExist (user.getLogin())==false) {
-//			currentSession.save(user);
-//			Query theQuery = currentSession
-//					.createQuery("update User set password=:passwordParam, role.id=:roleParam, dateRegistration=:dateParam, statusUser.id=:statusUserParam  where id=:idParam", User.class);
-//
-//			theQuery.setParameter("passwordParam", hashPassword(user.getPassword())); 
-//			theQuery.setParameter("roleParam", 2); // user
-//			Date now = new Date();
-//			theQuery.setParameter("dateParam", now.getTime());
-//			theQuery.setParameter("statusUserParam", 1); // active
-//			theQuery.setParameter("idParam", user.getId());
-//			theQuery.executeUpdate();
-//			    } return true;
-//			     	
-//		} catch (HibernateException e) {
-//			throw new DaoException("Hibernate getting error from method registration", e);
-//		}
-//	}
 	
 //    @Override	
 //	public String getRole(String login, String password) throws DaoException {
@@ -197,8 +152,6 @@ public class UserDAOImpl implements UserDAO {
 //		return role;
 //	}
 
-
-	
 
 	}
 

@@ -31,9 +31,10 @@ public class StatusUser implements Serializable{
 		super();
 	}
 	
-    public StatusUser(int id) {
+    public StatusUser(int id,String statusName) {
 		super();
     	this.id=id;
+    	this.statusName=statusName;
 	}
 	
 	public int getId() {

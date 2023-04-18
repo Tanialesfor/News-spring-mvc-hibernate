@@ -66,12 +66,6 @@ public class NewsDAOImpl implements NewsDAO {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 			currentSession.save(news);
-			Query theQuery = currentSession
-					.createQuery("update News set statusNews.id=:statusParam where idNews=:idParam", News.class);
-
-			theQuery.setParameter("statusParam", 4); // published
-			theQuery.setParameter("idParam", news.getIdNews());
-			theQuery.executeUpdate();
 
 		} catch (HibernateException e) {
 			throw new NewsDAOException("Hibernate getting error from method addNews", e);
@@ -115,16 +109,17 @@ public class NewsDAOImpl implements NewsDAO {
 				Integer id;
 				try {
 					id = Integer.parseInt(idNews);
-					
-				} catch (NumberFormatException e) {
-					throw new NewsDAOException("Error with parsing ", e);
-				}
-				Query theQuery = currentSession
+					Query theQuery = currentSession
 						.createQuery("update News set statusNews.id=:statusParam where idNews=:idParam", News.class);
 
 				theQuery.setParameter("statusParam", 2); // deleted
 				theQuery.setParameter("idParam", id);
 				theQuery.executeUpdate();
+				
+				} catch (NumberFormatException e) {
+					throw new NewsDAOException("Error with parsing ", e);
+				}
+				
 			}
 	}
 

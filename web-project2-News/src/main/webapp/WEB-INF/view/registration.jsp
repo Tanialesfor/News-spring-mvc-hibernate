@@ -10,13 +10,13 @@
 
 <div class="add-table-margin">
 	<form:form action="doRegistration" modelAttribute="user" method="POST">
-	<form:hidden path="id" />
+	
 	<table class="news_text_format">
 		<tr>
 			<td class="space_around_title_text">${name} Enter name:   </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input path="userDetails.userName"/>
+			<form:input id="userName" path="userDetails.userName"/>
 			</div></td>
 			
 		</tr>
@@ -25,7 +25,7 @@
 			<td class="space_around_title_text">${surname} Enter surname:   </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input path="userDetails.userSurname"/>
+			<form:input id="userSurname" path="userDetails.userSurname"/>
 				
 			</div></td>
 			
@@ -35,7 +35,7 @@
 			<td class="space_around_title_text">${birthday}  Enter birthday:  </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker"> 
-			<form:input path="userDetails.birthday"  />
+			<form:input id="birthday" path="userDetails.birthday"  />
 				
 			</div></td>
 			
@@ -45,7 +45,7 @@
 			<td class="space_around_title_text">${email} Enter email:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input path="userDetails.email" />
+			<form:input id="email" path="userDetails.email" />
 				
 			</div></td>
 				
@@ -54,7 +54,7 @@
 			<td class="space_around_title_text">${login} Enter login:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input path="login"/>
+			<form:input id="login" path="login"/>
 				
 			</div></td>
 			
@@ -63,7 +63,7 @@
 			<td class="space_around_title_text">${password} Enter password:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input path="password"/>
+			<form:input id="password" path="password"/>
 				
 			</div></td>
 			
@@ -80,12 +80,14 @@
 </form:form> 
 	
 	<div class="second-view-button">
-	<form action="doSignOut" method="get">
+	<form action="doSignOut" method="post">
 	<input type="submit" value="Cancel" />
+	</form>
+	
 	<!--  <form action="controller" method="post">
 		<input type="hidden" name="command" value="do_sign_out" /> 
-		<input type="submit" value="${cancel}" />
-	</form>-->
+		<input type="submit" value="${cancel}" />-->
+	
  </div>   
 
 </div>

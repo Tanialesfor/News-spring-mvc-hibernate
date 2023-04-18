@@ -26,6 +26,16 @@ public class StatusNews implements Serializable{
 	
 	@Column(name="status_name")
 	private String statusName;
+	
+	public StatusNews() {
+		super();
+	}
+	
+	public StatusNews(int id, String statusName) {
+		super();
+		this.id=id;
+		this.statusName=statusName;
+	}
 
 	public int getId() {
 		return id;
@@ -43,9 +53,7 @@ public class StatusNews implements Serializable{
 		this.statusName = statusName;
 	}
 
-	public StatusNews() {
-
-	}
+	
 	
 	@Override
 	public int hashCode() {

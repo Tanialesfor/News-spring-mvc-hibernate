@@ -17,40 +17,31 @@ public class NewsServiceImpl implements NewsService {
 
 	@Autowired
 	private NewsDAO newsDAO;
-		
-//	@Override
+
 	@Transactional
+	@Override
 	public void add(News news) throws ServiceException {
-//		String title = news.getTitle();
-//		String brief = news.getBriefNews();
-//		String content = news.getContent();
-//		String date = news.getNewsDate();
-		
-		  try {
-					newsDAO.addNews(news);
-				} catch (NewsDAOException e) {
-					throw new ServiceException(e);
-				}	
+
+		try {
+			newsDAO.addNews(news);
+		} catch (NewsDAOException e) {
+			throw new ServiceException(e);
+		}
 	}
 
-//	@Override
 	@Transactional
+	@Override
 	public void update(News news) throws ServiceException {
-				
-//		String title = news.getTitle();
-//		String brief = news.getBriefNews();
-//		String content = news.getContent();
-//		String date = news.getNewsDate();
-		
+
 		try {
 			newsDAO.updateNews(news);
-			} catch (NewsDAOException e) {
-					throw new ServiceException(e);
-				}
+		} catch (NewsDAOException e) {
+			throw new ServiceException(e);
 		}
+	}
 
-//	@Override
 	@Transactional
+	@Override
 	public void delete(List<String> idNews) throws ServiceException {
 		try {
 			newsDAO.deleteNewses(idNews);
@@ -61,18 +52,8 @@ public class NewsServiceImpl implements NewsService {
 
 	}
 
-////	@Override
-//	@Transactional
-//	public List<News> latestList(int count) throws ServiceException {
-//		try {
-//			return newsDAO.getLatestsList(5);
-//		} catch (NewsDAOException e) {
-//			throw new ServiceException(e);
-//		}
-//	}
-
-//	@Override
 	@Transactional
+	@Override
 	public List<News> list() throws ServiceException {
 		try {
 			return newsDAO.getList();
@@ -81,8 +62,8 @@ public class NewsServiceImpl implements NewsService {
 		}
 	}
 
-//	@Override
 	@Transactional
+	@Override
 	public News findById(int id) throws ServiceException {
 		try {
 			return newsDAO.fetchById(id);
@@ -91,5 +72,13 @@ public class NewsServiceImpl implements NewsService {
 		}
 	}
 
-	
+	@Override
+	public List<News> latestList(int count) throws ServiceException {
+		try {
+			return newsDAO.getLatestsList(count);
+		} catch (NewsDAOException e) {
+			throw new ServiceException(e);
+		}
+	}
+
 }
