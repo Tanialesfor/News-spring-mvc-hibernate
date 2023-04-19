@@ -114,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
 			if (theUser != null) {
 				return false;
 			} else {				
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDateTime date = LocalDateTime.now();
 				String dateTime = formatter.format(date);
 				String hashpassword = hashPassword(user.getPassword());

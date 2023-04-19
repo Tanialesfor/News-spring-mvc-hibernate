@@ -110,7 +110,7 @@ public class NewsDAOImpl implements NewsDAO {
 				try {
 					id = Integer.parseInt(idNews);
 					Query theQuery = currentSession
-						.createQuery("update News set statusNews.id=:statusParam where idNews=:idParam", News.class);
+						.createQuery("update News set statusNews.id=:statusParam where idNews=:idParam");
 
 				theQuery.setParameter("statusParam", 2); // deleted
 				theQuery.setParameter("idParam", id);

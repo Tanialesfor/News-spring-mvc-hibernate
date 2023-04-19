@@ -3,6 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--@ include file="/WEB-INF/view/localizationGeneral.jsp" --%>
 
+<style>
+.error {color: red}
+</style>
+
 <div class="body-title">
 	<a href="goToNewsList"> ${news_}News>> </a> ${edit_news_b}Edit News>>
 	<br /> <br /> <br /> <br />
@@ -17,6 +21,8 @@
 			<td class="space_around_view_text">
 			<div class="word-breaker">
 				<form:input path="title"/> 
+				 <form:errors path="title" cssClass = "error"/>
+				 
 			</div></td>	
 			
 		</tr>
@@ -25,6 +31,7 @@
 			<td class="space_around_view_text">
 			<div class="word-breaker">
 				<form:input path="newsDate"/>
+				<form:errors path="newsDate" cssClass = "error"/>
 			</div></td>
 				
 		</tr>
@@ -32,8 +39,8 @@
 			<td class="space_around_title_text">${brief} Brief</td>
 			<td class="space_around_view_text">
 			<div class="word-area-breaker">
-			<form:textarea rows="8" cols="50" path="brief"/> <!--<c:out value="${news.brief }" />-->
-			
+			<form:textarea rows="8" cols="55" path="brief"/> <!--<c:out value="${news.brief }" />-->
+			<form:errors path="brief" cssClass = "error"/>	
 			</div></td>
 			
 		</tr>
@@ -41,8 +48,8 @@
 			<td class="space_around_title_text">${content} Content</td>
 			<td class="space_around_view_text">
 			<div class="word-area-breaker">
-			<form:textarea rows="12" cols="50" path="content" /> <!--<c:out value="${news.content }" />-->
-			
+			<form:textarea rows="12" cols="55" path="content" /> <!--<c:out value="${news.content }" />-->
+			<form:errors path="content" cssClass = "error"/>
 			</div></td>
 			
 		</tr>

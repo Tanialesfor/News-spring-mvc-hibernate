@@ -20,6 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.Valid;
 
 @Entity
 @Table(name="users")
@@ -30,15 +31,15 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id=0;
+	private int id;
 	
-//	@NotNull(message = "please, enter field")
-//	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter symbols from 1 to 10")
+	@NotNull(message = "please, enter field")
+	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter correctly")
 	@Column(name="login")
 	private String login;
 	
-//	@NotNull(message = "please, enter field")
-//	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter symbols from 1 to 10")
+	@NotNull(message = "please, enter field")
+//	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter correctly")
 	@Column(name="password")
 	private String password;
 	
@@ -53,6 +54,7 @@ public class User implements Serializable{
 	@JoinColumn(name = "status_id")
 	private StatusUser statusUser;
 	
+	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_details_id")
 	private UserDetails userDetails;

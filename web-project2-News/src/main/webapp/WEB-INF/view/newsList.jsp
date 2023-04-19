@@ -6,6 +6,12 @@
 <div class="body-title">
 	<a href="goToNewsList">${news_} News>> </a> ${news_list_b} News list>>
 	<br /> <br /> <br /> <br />
+	 <c:if test="${not (sessionScope.authenticationMessage eq null)}">
+						<font color="blue"> 
+						   	<c:out value="${authenticationMessage}" />
+						   	<c:remove var="authenticationMessage"/>						   	
+						</font> 
+					</c:if>		
 	</div>
 
 			

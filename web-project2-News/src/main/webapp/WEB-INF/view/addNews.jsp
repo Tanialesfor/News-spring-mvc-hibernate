@@ -3,9 +3,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%--@ include file="/WEB-INF/view/localizationGeneral.jsp" --%> 
 
+<style>
+.error {color: red}
+</style>
+
 <div class="body-title">
 	<a href="goToNewsList"> ${news_} News>> </a> ${add_news_b} Add News>>
-	
+	<br /> <br /><br /> <br />
 </div>
 
 <div class="add-table-margin">
@@ -19,7 +23,8 @@
 			<td class="space_around_view_text">
 			<div class="word-breaker">
 				 
-			    <form:input path="title" />
+			    <form:input path="title" placeholder="latin characters from 5 to 45"/>
+			    <form:errors path="title" cssClass = "error"/>
 			</div></td>
 			
 		</tr>
@@ -28,7 +33,7 @@
 			<td class="space_around_view_text">
 			<div class="word-breaker">
 				 <form:input path="newsDate" placeholder="template YYYY-MM-DD"/>
-				
+				<form:errors path="newsDate" cssClass = "error"/>
 			</div></td>
 				
 		</tr>
@@ -38,8 +43,8 @@
 			<div class="word-area-breaker">
 			
 					
-			<form:textarea path = "brief" rows="8" cols="50" title="enter brief of news" />
-						
+			<form:textarea path = "brief" rows="4" cols="55" placeholder="latin characters from 5" />
+			<form:errors path="brief" cssClass = "error"/>			
 			</div></td>
 			
 		</tr>
@@ -48,8 +53,8 @@
 			<td class="space_around_view_text">
 			<div class="word-area-breaker">
 			
-			<form:textarea path = "content" rows="12" cols="50" title="enter content of news" /> 
-						
+			<form:textarea path = "content" rows="15" cols="55" placeholder="latin characters from 10" /> 
+			<form:errors path="content" cssClass = "error"/>	
 			</div></td>
 			
 		</tr>

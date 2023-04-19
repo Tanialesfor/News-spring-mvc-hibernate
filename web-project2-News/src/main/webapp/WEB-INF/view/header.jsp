@@ -28,39 +28,46 @@
 					${password} Enter password:
 					<input type="password" name="password" value="" title="symbols from 1 to 10"/><br />
 				
-					<c:if test="${not (requestScope.AuthenticationError eq null)}">
+					<c:if test="${not (sessionScope.authenticationError eq null)}">
 						<font color="red"> 
-						<c:out value="${requestScope.AuthenticationError}" />
+						<c:out value="${authenticationError}" />
+						<c:remove var="authenticationError"/>
 						  <!--   <c:out value="${signIn_auther_error_text}" />-->
 						   </font> 
-						 </c:if>	  
-				  
-				  <c:if test="${not (requestScope.RegistrationError eq null)}">
+						 </c:if>
+						
+										  
+				  <c:if test="${not (sessionScope.registrationError eq null)}">
 						<font color="red"> 
-						   <c:out value="${doRegistration_auther_inf_text}" />
-						   <c:remove var="RegistrationError"/>	
+						<c:out value="${registrationError}" />
+						  <!--   <c:out value="${doRegistration_auther_inf_text}" />-->
+						   <c:remove var="registrationError"/>	
 						</font> 
 					</c:if>	
 					
-					<c:if test="${not (sessionScope.autherMessageReg eq null)}">
+					<c:if test="${not (sessionScope.registrationMessage eq null)}">
 						<font color="orange"> 
-						   	<c:out value="${doRegistration_auther_message_text}" />
-						   	<c:remove var="autherMessageReg"/>						   	
+						   	<c:out value="${registrationMessage}" />
+						  <!--   	<c:out value="${doRegistration_auther_message_text}" />-->
+						   	<c:remove var="registrationMessage"/>						   	
 						</font> 
-					</c:if>		
+					</c:if>	
 					
-					<c:if test="${not (sessionScope.autherInfReg eq null)}">
+										
+					<c:if test="${not (sessionScope.registrationMessageInf eq null)}">
 						<font color="red"> 
-						   	<c:out value="${doRegistration_auther_inf_text}" />
-						   	<c:remove var="autherInfReg"/>						   	
+						   	<c:out value="${registrationMessageInf}" />
+						   <!-- 	<c:out value="${doRegistration_auther_inf_text}" /> -->
+						   	<c:remove var="registrationMessageInf"/>						   	
 						</font> 
 					</c:if>	
 					
 					<c:if test="${not (sessionScope.autherMessage eq null)}">
 						<font color="blue"> 
-					   		<c:out value="${sessionScope.autherMessage}" />
+					   		<c:out value="${autherMessage}" />
+					   		<c:remove var="autherMessage"/>
 						</font> 
-					</c:if>	
+					</c:if>
 																								
 					<a href="goToRegistrationPage"> ${registration} Registration </a> 
 					
@@ -76,7 +83,7 @@
             	<form action="doSignOut" method="post">
 	            	<c:if test="${not (sessionScope.autherMessage eq null)}">
 						<font color="blue"> 
-						   	<c:out value="${sessionScope.autherMessage}" />
+						   	<c:out value="${autherMessage}" />
 						   	<c:remove var="autherMessage"/>						   	
 						</font> 
 					</c:if>	

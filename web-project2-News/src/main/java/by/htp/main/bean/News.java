@@ -25,27 +25,27 @@ public class News implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private Integer idNews=0;
+	private Integer idNews;
 	
-//	@NotNull(message = "please, enter field")
-//	@Pattern(regexp = "^[\\S\\s]{5,45}$", message = "please, enter Latin characters into the field from 5 to 45")
+	@NotNull(message = "please, enter field")
+	@Pattern(regexp = "^[\\S\\s]{5,45}$", message = "please, enter correctly")
 	@Column(name="title")
-	private String title="";
+	private String title;
 	
-//	@NotNull(message = "please, enter field")
-//	@Pattern(regexp = "^[\\S\\s]{5,100}$", message = "please, enter Latin characters into the field")
+	@NotNull(message = "please, enter field")
+	@Pattern(regexp = "^[\\S\\s]{5,100}$", message = "please, enter correctly")
 	@Column(name="brief")
-	private String brief="";
+	private String brief;
 	
-// @NotNull(message = "please, enter field")
-//	@Pattern(regexp = "^[\\S\\s]{10,}$", message = "please, enter Latin characters into the field")
+    @NotNull(message = "please, enter field")
+	@Pattern(regexp = "^[\\S\\s]{10,}$", message = "please, enter correctly")
 	@Column(name="content")
-	private String content="";
+	private String content;
 	
-// @NotNull(message = "please, enter field")
-//	@Pattern(regexp = "((19|20)\\d\\d)\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])", message = "please, enter for template YYYY-MM-DD")
+    @NotNull(message = "please, enter field")
+	@Pattern(regexp = "((19|20)\\d\\d)\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])", message = "please, enter correctly")
 	@Column(name="date_creation")
-	private String newsDate="";
+	private String newsDate;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "users_id")

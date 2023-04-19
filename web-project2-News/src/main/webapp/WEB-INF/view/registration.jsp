@@ -3,6 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--@ include file="/WEB-INF/view/localizationGeneral.jsp" --%> 
 
+<style>
+.error {color: red}
+</style> 
+
 <div class="body-title">
 	<h2> ${registration_page} Registration page</h2>
 	<h3> ${registration_text}  To fill in the empty fields, please:</h3>
@@ -16,7 +20,8 @@
 			<td class="space_around_title_text">${name} Enter name:   </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input id="userName" path="userDetails.userName"/>
+			<form:input id="userName" path="userDetails.userName"  placeholder="enter symbols from 1 to 10"/>
+			<form:errors path="userDetails.userName" cssClass = "error"/>
 			</div></td>
 			
 		</tr>
@@ -25,7 +30,8 @@
 			<td class="space_around_title_text">${surname} Enter surname:   </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input id="userSurname" path="userDetails.userSurname"/>
+			<form:input id="userSurname" path="userDetails.userSurname" placeholder="enter symbols from 1 to 15"/>
+			<form:errors path="userDetails.userSurname" cssClass = "error"/>
 				
 			</div></td>
 			
@@ -35,8 +41,8 @@
 			<td class="space_around_title_text">${birthday}  Enter birthday:  </td>
 			<td class="space_around_view_text">
 			<div class="word-breaker"> 
-			<form:input id="birthday" path="userDetails.birthday"  />
-				
+			<form:input id="birthday" path="userDetails.birthday" placeholder="template YYYY-MM-DD" />
+			<form:errors path="userDetails.birthday" cssClass = "error"/>
 			</div></td>
 			
 		</tr>
@@ -46,7 +52,7 @@
 			<td class="space_around_view_text">
 			<div class="word-breaker">
 			<form:input id="email" path="userDetails.email" />
-				
+			<form:errors path="userDetails.email" cssClass = "error"/>
 			</div></td>
 				
 		</tr>
@@ -54,7 +60,8 @@
 			<td class="space_around_title_text">${login} Enter login:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input id="login" path="login"/>
+			<form:input id="login" path="login" placeholder="enter symbols from 1 to 10"/>
+			<form:errors path="login" cssClass = "error"/>
 				
 			</div></td>
 			
@@ -63,8 +70,8 @@
 			<td class="space_around_title_text">${password} Enter password:</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-			<form:input id="password" path="password"/>
-				
+			<form:input id="password" path="password" placeholder="enter symbols from 1 to 10"/>
+			<form:errors path="password" cssClass = "error"/>
 			</div></td>
 			
 		</tr>
