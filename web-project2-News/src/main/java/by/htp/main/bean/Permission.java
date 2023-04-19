@@ -27,6 +27,10 @@ public class Permission implements Serializable {
 	@Column(name = "permission_name")
 	private String permissionName;
 
+	public Permission() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -43,10 +47,6 @@ public class Permission implements Serializable {
 		this.permissionName = permissionName;
 	}
 
-	public Permission() {
-
-	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, permissionName);
@@ -68,6 +68,5 @@ public class Permission implements Serializable {
 	public String toString() {
 		return "Permission [id=" + id + ", permissionName=" + permissionName + "]";
 	}
-	
-	
+
 }

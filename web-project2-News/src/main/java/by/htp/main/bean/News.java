@@ -17,45 +17,45 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name="news")
-public class News implements Serializable{
+@Table(name = "news")
+public class News implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer idNews;
-	
+
 	@NotNull(message = "please, enter field")
 	@Pattern(regexp = "^[\\S\\s]{5,45}$", message = "please, enter correctly")
-	@Column(name="title")
+	@Column(name = "title")
 	private String title;
-	
+
 	@NotNull(message = "please, enter field")
 	@Pattern(regexp = "^[\\S\\s]{5,100}$", message = "please, enter correctly")
-	@Column(name="brief")
+	@Column(name = "brief")
 	private String brief;
-	
-    @NotNull(message = "please, enter field")
+
+	@NotNull(message = "please, enter field")
 	@Pattern(regexp = "^[\\S\\s]{10,}$", message = "please, enter correctly")
-	@Column(name="content")
+	@Column(name = "content")
 	private String content;
-	
-    @NotNull(message = "please, enter field")
+
+	@NotNull(message = "please, enter field")
 	@Pattern(regexp = "((19|20)\\d\\d)\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])", message = "please, enter correctly")
-	@Column(name="date_creation")
+	@Column(name = "date_creation")
 	private String newsDate;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "users_id")
 	private User user;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "status_news_id")
 	private StatusNews statusNews;
-	
-	public News () {
+
+	public News() {
 		super();
 	}
 
@@ -139,6 +139,5 @@ public class News implements Serializable{
 		return "News [idNews=" + idNews + ", title=" + title + ", brief=" + brief + ", content=" + content
 				+ ", newsDate=" + newsDate + ", statusNews=" + statusNews + "]";
 	}
-	
-	
+
 }

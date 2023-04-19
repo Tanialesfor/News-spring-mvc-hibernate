@@ -23,51 +23,47 @@ import javax.validation.constraints.Pattern;
 import javax.validation.Valid;
 
 @Entity
-@Table(name="users")
-public class User implements Serializable{
-	
+@Table(name = "users")
+public class User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
+
 	@NotNull(message = "please, enter field")
 	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter correctly")
-	@Column(name="login")
+	@Column(name = "login")
 	private String login;
-	
+
 	@NotNull(message = "please, enter field")
-//	@Pattern(regexp = "^[a-zA-Z0-9-]{1,10}$", message = "please, enter correctly")
-	@Column(name="password")
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name="date_registration")
+
+	@Column(name = "date_registration")
 	private String dateRegistration;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "roles_id")
 	private Role role;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "status_id")
 	private StatusUser statusUser;
-	
+
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_details_id")
 	private UserDetails userDetails;
-	
-	
-	@OneToMany(fetch=FetchType.LAZY,
-			   mappedBy="user",
-			   cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-						 CascadeType.DETACH, CascadeType.REFRESH})
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH })
 	private List<News> news;
-	
+
 	public User() {
-       super();
+		super();
 	}
 
 	public int getId() {
@@ -161,5 +157,4 @@ public class User implements Serializable{
 				+ ", news=" + news + "]";
 	}
 
-		
 }

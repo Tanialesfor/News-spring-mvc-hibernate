@@ -117,5 +117,4 @@ public class UserDetails implements Serializable {
 				+ ", email=" + email + "]";
 	}
 	
-	
 }

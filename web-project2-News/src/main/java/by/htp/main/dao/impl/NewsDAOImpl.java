@@ -28,9 +28,11 @@ public class NewsDAOImpl implements NewsDAO {
 
 			Session currentSession = sessionFactory.getCurrentSession();
 
-			Query<News> theQuery = currentSession.createQuery("from News where statusNews.id=:statusParam order by date(date_creation) desc", News.class);
+			Query<News> theQuery = currentSession.createQuery(
+					"from News where statusNews.id=:statusPubParam or statusNews.id=:statusNewParam order by date(date_creation) desc", News.class);
 
-			theQuery.setParameter("statusParam", 4); // published
+			theQuery.setParameter("statusPubParam", 4); 
+			theQuery.setParameter("statusNewParam", 1); 
 			theQuery.setMaxResults(count);
 
 			List<News> newsList = theQuery.getResultList();
@@ -48,8 +50,10 @@ public class NewsDAOImpl implements NewsDAO {
 
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
-			Query<News> theQuery = currentSession.createQuery("from News where statusNews.id=:statusParam order by date(date_creation) desc", News.class);
-			theQuery.setParameter("statusParam", 4); // published
+			Query<News> theQuery = currentSession.createQuery(
+					"from News where statusNews.id=:statusPubParam or statusNews.id=:statusNewParam order by date(date_creation) desc", News.class);
+			theQuery.setParameter("statusPubParam", 4); 
+			theQuery.setParameter("statusNewParam", 1);
 
 			List<News> newsList = theQuery.getResultList();
 
@@ -93,7 +97,7 @@ public class NewsDAOImpl implements NewsDAO {
 			Session currentSession = sessionFactory.getCurrentSession();
 
 			currentSession.update(news);
-			
+
 		} catch (HibernateException e) {
 			throw new NewsDAOException("Hibernate getting error from method updateNews", e);
 		}
@@ -101,26 +105,26 @@ public class NewsDAOImpl implements NewsDAO {
 	}
 
 	@Override
-	public void deleteNewses(List <String> idNewses) throws NewsDAOException {	
-		
-			Session currentSession = sessionFactory.getCurrentSession();
+	public void deleteNewses(List<String> idNewses) throws NewsDAOException {
 
-			for (String idNews : idNewses) {
-				Integer id;
-				try {
-					id = Integer.parseInt(idNews);
-					Query theQuery = currentSession
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		for (String idNews : idNewses) {
+			Integer id;
+			try {
+				id = Integer.parseInt(idNews);
+				Query theQuery = currentSession
 						.createQuery("update News set statusNews.id=:statusParam where idNews=:idParam");
 
 				theQuery.setParameter("statusParam", 2); // deleted
 				theQuery.setParameter("idParam", id);
 				theQuery.executeUpdate();
-				
-				} catch (NumberFormatException e) {
-					throw new NewsDAOException("Error with parsing ", e);
-				}
-				
+
+			} catch (NumberFormatException e) {
+				throw new NewsDAOException("Error with parsing ", e);
 			}
+
+		}
 	}
 
 }

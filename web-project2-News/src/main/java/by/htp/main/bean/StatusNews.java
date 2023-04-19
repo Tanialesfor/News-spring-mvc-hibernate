@@ -53,8 +53,6 @@ public class StatusNews implements Serializable{
 		this.statusName = statusName;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, statusName);
@@ -76,6 +74,5 @@ public class StatusNews implements Serializable{
 	public String toString() {
 		return "StatusNews [id=" + id + ", statusName=" + statusName + "]";
 	}
-	
-	
+		
 }

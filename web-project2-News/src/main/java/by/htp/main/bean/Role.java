@@ -18,43 +18,38 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="roles")
-public class Role implements Serializable{
+@Table(name = "roles")
+public class Role implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="role_name")
+
+	@Column(name = "role_name")
 	private String roleName;
-	
+
 	@OneToOne(mappedBy = "role", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	private User user;
-	
-	@ManyToMany(fetch=FetchType.LAZY,
-			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-			 CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinTable(
-			name="role_has_permissions",
-			joinColumns=@JoinColumn(name="roles_id"),
-			inverseJoinColumns=@JoinColumn(name="permissions_id")
-			)
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	@JoinTable(name = "role_has_permissions", joinColumns = @JoinColumn(name = "roles_id"), inverseJoinColumns = @JoinColumn(name = "permissions_id"))
 	private List<Permission> permission;
 
 	public Role() {
 		super();
 	}
-	
+
 	public Role(int id, String roleName) {
-        super();
-		this.id=id;
-		this.roleName=roleName;
+		super();
+		this.id = id;
+		this.roleName = roleName;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -101,6 +96,5 @@ public class Role implements Serializable{
 	public String toString() {
 		return "Role [id=" + id + ", roleName=" + roleName + ", permission=" + permission + "]";
 	}
-	
-	
+
 }
